@@ -46,7 +46,6 @@ if is_connected():
         "Google Chromium":"chromium",
         "Mpv":'mpv',
         "Telegram":"telegram-desktop",
-        "Google Chrome":""
     }
 
     # GUI setup
