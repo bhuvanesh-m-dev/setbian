@@ -101,7 +101,7 @@ python3 main.py
 
 ## 🔧 Dev Info
 
-**Maintainer:** Bhuvanesh M
+**Maintainer:** Bhuvanesh M  
 **Email:** [bhuvaneshm.developer@gmail.com](mailto:bhuvaneshm.developer@gmail.com)
 **Homepage:** [https://github.com/bhuvanesh-m-dev/Setbian](https://github.com/bhuvanesh-m-dev/Setbian)
 
