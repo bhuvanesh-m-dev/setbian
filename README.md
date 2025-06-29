@@ -33,7 +33,7 @@ wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download
 
 ## 💻 Screenshot Preview
 
-> *Coming soon!*
+<img src="https://raw.githubusercontent.com/bhuvanesh-m-dev/setbian/refs/heads/main/setbian/screenshot1.png" alt="Setbian Project Preview" width="600">
 
 ---
 
