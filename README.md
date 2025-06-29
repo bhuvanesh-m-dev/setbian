@@ -8,7 +8,7 @@
 
 ```bash
 wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.1/setbian-0.0.1.deb && \
-  sudo dpkg -i setbian.deb || sudo apt --fix-broken install -y
+  sudo dpkg -i setbian.deb || sudo apt --fix-broken install -y || setbian
 ```
 
 ---
