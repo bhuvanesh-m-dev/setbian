@@ -7,7 +7,7 @@
 ## 📦 Install via APT
 
 ```bash
-wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.1/setbian_0.0.1_amd64.deb && \
+wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.1/setbian-0.0.1.deb && \
   sudo dpkg -i setbian.deb || sudo apt --fix-broken install -y
 ```
 
