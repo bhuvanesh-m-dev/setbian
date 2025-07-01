@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import socket
 
 # Check for internet connection before launching the main UI
