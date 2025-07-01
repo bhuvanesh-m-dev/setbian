@@ -1,0 +1,9 @@
+Type=Application
+Version=0.0.2
+Name=SetBian
+Path=/usr/bin
+Exec=setbian
+Icon=
+Terminal=false
+Categories=Languages;Python;
+

@@ -1,0 +1,89 @@
+#!/usr/bin/python3
+import tkinter as tk
+from tkinter import messagebox
+import subprocess
+import internet
+from msg import msg, msg_progress, sudo_password_prompt, close_sudo_prompt, close_msg
+
+# Function to install selected packages
+def install_selected():
+    selected = [pkg for name, pkg in available_apps.items() if vars_check[name].get()]
+    
+    if not selected:
+        messagebox.showinfo("No Selection", "Please select at least one app to install.")
+        return
+
+    for name, pkg in available_apps.items():
+        if vars_check[name].get():
+            try:
+                msg(name, "Downloading and Installing...")
+                root.update()
+                subprocess.run(
+                    ["sudo", "apt", "install", "-y", pkg],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                msg(name, "Installed successfully!")
+            except subprocess.CalledProcessError:
+                msg(name, "Failed to install!")
+                messagebox.showerror("Installation Error", f"Failed to install {pkg}")
+                close_msg()
+                return
+
+    close_msg()
+    messagebox.showinfo("Success", "Selected apps installed successfully.")
+
+# Launch GUI only if internet is connected
+if internet.is_connected():
+    # Define available packages
+    available_apps = {
+        "Git": "git",
+        "Curl": "curl",
+        "VLC Media Player": "vlc",
+        "GIMP": "gimp",
+        "VS Code": "code",
+        "FireFox":"firefox-esr",
+        "Google Chromium":"chromium",
+        "Mpv":'mpv',
+        "Telegram":"telegram-desktop",
+    }
+
+    # GUI setup
+    root = tk.Tk()
+    root.title("Setbian - Smart Debian App Installer")
+    root.geometry("400x350")
+    root.resizable(False, False)
+
+    tk.Label(root, text="Select Apps to Install:", font=("Arial", 14, "bold")).pack(pady=10)
+
+    # Create checkboxes dynamically
+    vars_check = {}
+    for app in available_apps:
+        var = tk.BooleanVar()
+        chk = tk.Checkbutton(root, text=app, variable=var, font=("Arial", 12))
+        chk.pack(anchor='w', padx=40)
+        vars_check[app] = var
+
+    # Install button
+    install_btn = tk.Button(
+        root,
+        text="Install Selected",
+        font=("Arial", 12, "bold"),
+        bg="#4CAF50",
+        fg="white",
+        command=install_selected
+    )
+    install_btn.pack(pady=20)
+
+    # Run the app
+    root.mainloop()
+
+else:
+    # Show internet error popup
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+    messagebox.showerror(
+        "No Internet Connection",
+        "Please connect to the internet via Ethernet or Wi-Fi and relaunch Setbian.\n\nThank you!"
+    )
