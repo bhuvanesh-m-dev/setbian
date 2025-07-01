@@ -1,15 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import subprocess
-import socket
-
-# Check for internet connection before launching the main UI
-def is_connected():
-    try:
-        socket.create_connection(("1.1.1.1", 53), timeout=3)
-        return True
-    except OSError:
-        return False
+import internet
 
 # Function to install selected packages
 def install_selected():
@@ -34,7 +26,7 @@ def install_selected():
     messagebox.showinfo("Success", "Selected apps installed successfully.")
 
 # Launch GUI only if internet is connected
-if is_connected():
+if internet.is_connected():
     # Define available packages
     available_apps = {
         "Git": "git",
