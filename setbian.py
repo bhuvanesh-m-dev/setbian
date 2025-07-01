@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import subprocess
 import internet
+from msg import msg, close_msg  # Import from msg.py
 
 # Function to install selected packages
 def install_selected():
@@ -11,18 +12,25 @@ def install_selected():
         messagebox.showinfo("No Selection", "Please select at least one app to install.")
         return
 
-    for pkg in selected:
-        try:
-            subprocess.run(
-                ["sudo", "apt", "install", "-y", pkg],
-                check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
-            )
-        except subprocess.CalledProcessError:
-            messagebox.showerror("Installation Error", f"Failed to install {pkg}")
-            return
+    for name, pkg in available_apps.items():
+        if vars_check[name].get():
+            try:
+                msg(name, "Downloading and Installing...")
+                root.update()
+                subprocess.run(
+                    ["sudo", "apt", "install", "-y", pkg],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                msg(name, "Installed successfully!")
+            except subprocess.CalledProcessError:
+                msg(name, "Failed to install!")
+                messagebox.showerror("Installation Error", f"Failed to install {pkg}")
+                close_msg()
+                return
 
+    close_msg()
     messagebox.showinfo("Success", "Selected apps installed successfully.")
 
 # Launch GUI only if internet is connected
