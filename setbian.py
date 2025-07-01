@@ -1,8 +1,9 @@
+#!/usr/bin/python3
 import tkinter as tk
 from tkinter import messagebox
 import subprocess
 import internet
-from msg import msg, close_msg  # Import from msg.py
+from msg import msg, msg_progress, sudo_password_prompt, close_sudo_prompt, close_msg
 
 # Function to install selected packages
 def install_selected():
