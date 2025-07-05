@@ -35,7 +35,7 @@ setbian
 
 ## 💻 Screenshot Preview
 
-<img src="https://raw.githubusercontent.com/bhuvanesh-m-dev/setbian/refs/heads/main/setbian/screenshot1.png" alt="Setbian Project Preview" width="1000">
+<img src="https://raw.githubusercontent.com/bhuvanesh-m-dev/setbian/refs/heads/main/setbian/screenshot2.png" alt="Setbian Project Preview" width="1000">
 
 ---
 
