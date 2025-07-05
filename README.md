@@ -105,7 +105,7 @@ python3 main.py
 
 **Maintainer:** Bhuvanesh M  
 **Email:** [bhuvaneshm.developer@gmail.com](mailto:bhuvaneshm.developer@gmail.com)  
-**Homepage:** [github.com/bhuvanesh-m-dev/Setbian](https://github.com/bhuvanesh-m-dev/Setbian)
+**Homepage:** [github.com/bhuvanesh-m-dev/Setbian](https://github.com/bhuvanesh-m-dev/Setbian)  
 **Webpage:** [bhuvaneshm.in/setbian](https://bhuvaneshm.in/setbian)
 
 License: MIT | Release: Stable
