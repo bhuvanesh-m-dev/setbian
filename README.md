@@ -8,7 +8,7 @@
 ![Latest Release](https://img.shields.io/github/v/release/bhuvanesh-m-dev/setbian)
 ![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![DevOps Friendly](https://img.shields.io/badge/DevOps-Automated%20Builds-orange)
-[![Download .deb](https://img.shields.io/badge/Download-.deb-blue)](https://bhuvaneshm.in/setbian/setbian.deb)
+[![Download .deb](https://img.shields.io/badge/Download-.deb-blue)](https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.3/setbian-0.0.3.deb)
 
 ---
 
