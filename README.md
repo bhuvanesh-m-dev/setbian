@@ -9,7 +9,7 @@
 ![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![DevOps Friendly](https://img.shields.io/badge/DevOps-Automated%20Builds-orange)
 [![Download .deb](https://img.shields.io/badge/Download-.deb-blue)](https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.3/setbian-0.0.3.deb)   
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=3000&pause=1000&color=F78F1E&center=true&width=435&lines=Welcome+to+Setbian+by+Bhuvanesh+M;A+GGUI+tool+for+Debian+System+Configuration;)  
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=3000&pause=1000&color=F78F1E&center=true&width=435&lines=Welcome+to+Setbian+by+Bhuvanesh+M;A+  GUI+tool+for+Debian+System+Configuration;)  
 ![Setbian Banner](https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif)
 ## 📦 Install via APT
 
