@@ -6,6 +6,8 @@
 ![Platform](https://img.shields.io/badge/Platform-Debian%20Linux-red)
 ![GUI](https://img.shields.io/badge/GUI-Tkinter-yellow)
 ![Latest Release](https://img.shields.io/github/v/release/bhuvanesh-m-dev/setbian)
+![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)
+
 
 
 ---
