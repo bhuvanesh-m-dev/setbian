@@ -93,7 +93,7 @@ python3 main.py
 
 ---
 
-## 🔖 Version: `v0.0.4`
+## 🔖 Version: `v0.0.4` Beta
 
 ### ✅ Now Includes One-Click Install for:
 
