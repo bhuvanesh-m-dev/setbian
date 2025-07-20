@@ -47,6 +47,10 @@ setbian
 
 ---
 
+[![Watch Setbian Demo](https://img.youtube.com/vi/xyKAwq2ITIU/0.jpg)](https://www.youtube.com/watch?v=xyKAwq2ITIU)
+
+---
+
 ## ⚙️ How It Works
 
 1. Boot into a fresh Debian install
