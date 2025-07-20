@@ -48,8 +48,7 @@ setbian
 ---
 
 ## 🎥 Setbian Demo Video - See It in Action!  
-🚀 Experience the power of Setbian in under 2 minutes!
-Simplify your Debian system configuration with just a few clicks — no terminal hassle.Watch the full walkthrough and installation guide below:
+🚀 Experience the power of Setbian in under 2 minutes!Simplify your Debian system configuration with just a few clicks — no terminal hassle.Watch the full walkthrough and installation guide below:  
 [![Watch Setbian Demo](https://img.youtube.com/vi/xyKAwq2ITIU/0.jpg)](https://www.youtube.com/watch?v=xyKAwq2ITIU)
 
 ---
