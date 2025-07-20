@@ -1,6 +1,10 @@
 ### 🧰 Setbian – Smart Debian Setup Assistant
 
 > Official APT package for Setbian — GUI-based batch installer for essential Debian apps.
+![MIT License](https://img.shields.io/github/license/bhuvanesh-m-dev/setbian)
+![Built with Python](https://img.shields.io/badge/Built%20with-Python-blue)
+![Platform](https://img.shields.io/badge/Platform-Debian%20Linux-red)
+![GUI](https://img.shields.io/badge/GUI-Tkinter-yellow)
 
 ---
 
