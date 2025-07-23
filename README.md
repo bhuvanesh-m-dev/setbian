@@ -27,7 +27,7 @@ setbian
 
 > *"Because even your system deserves a proper welcome."*
 
-**Setbian** is a lightweight, user-friendly GUI-based setup assistant for freshly installed **Debian** systems. Built with native Python and preinstalled libraries, Setbian helps you choose and install essential software — right after system setup, even **before you open the browser**.
+**Setbian** is a lightweight, user-friendly GUI-based setup assistant for freshly installed **Debian** systems. Built with native Python and preinstalled libraries, Setbian helps you choose and install essential software — right after system setup, even **before you open the browser**.  
 Setbian was born to simplify the complexity of configuring Debian-based systems. While Debian offers robustness and flexibility, many users—especially beginners—find its command-line configuration intimidating. Setbian addresses this by providing a clean and user-friendly graphical interface that automates common setup tasks, making Debian more accessible and efficient for everyone.
 
 [📄 Download Setbian User Guide (PDF)](./docs/setbian-user-guide-debian-config-tool.pdf)
