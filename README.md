@@ -15,7 +15,7 @@
 ## 📦 Install via APT
 
 ```bash
-wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.3/setbian-0.0.3.deb && \
+wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb && \
 sudo dpkg -i setbian.deb || (sudo apt --fix-broken install -y && sudo dpkg -i setbian.deb) && \
 setbian
 
@@ -96,7 +96,7 @@ python3 main.py
 
 ---
 
-## 🔖 Version: `v0.0.4` Beta
+## 🔖 Version: `v0.0.5` B
 
 ### ✅ Now Includes One-Click Install for:
 
@@ -109,6 +109,7 @@ python3 main.py
 * Google Chromium
 * MPV
 * Telegram Desktop
+* New in v0.0.5 : .deb file picker + system-level handler
 
 ---
 
