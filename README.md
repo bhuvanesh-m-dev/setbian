@@ -96,7 +96,7 @@ python3 main.py
 
 ---
 
-## 🔖 Version: `v0.0.5` B
+## 🔖 Version: `v0.0.5` 
 
 ### ✅ Now Includes One-Click Install for:
 
