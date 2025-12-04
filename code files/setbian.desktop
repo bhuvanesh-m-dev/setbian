@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Setbian
+Comment=Smart Debian Setup Assistant
+Exec=/usr/bin/setbian %f
+Icon=/usr/share/icons/setbian.png
+Terminal=false
+Type=Application
+Categories=System;Settings;
+MimeType=application/vnd.debian.binary-package;
