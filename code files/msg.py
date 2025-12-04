@@ -63,4 +63,3 @@ def close_msg():
         del msg.popup
     close_progress()
     close_sudo_prompt()
-
