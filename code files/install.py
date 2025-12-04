@@ -23,5 +23,3 @@ def img_install():
     except Exception as e:
         print(f"Failed to open terminal: {e}")
         return False
-
-
