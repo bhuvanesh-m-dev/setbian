@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian App Portal - Discover. Install. Contribute.</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="A community-driven app discovery portal built to enhance the Linux user experience — starting with Debian.">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Setbian Portal</div>
+                <!-- Future: Search bar or filters -->
+                <div style="font-size: 0.9rem; color: var(--text-secondary);">v1.0.0</div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Discover. Install. Contribute.</h1>
+                <p>A community-driven app discovery portal built to enhance the Linux user experience — starting with Debian.</p>
+            </div>
+        </section>
+
+        <section class="container section">
+            <h2 style="text-align: center;">Featured Apps</h2>
+            <div class="app-grid">
+                
+                <!-- ZenEdit App Card -->
+                <div class="app-card">
+                    <div class="app-icon">
+                        <!-- Placeholder Icon: Simple Z similar to text editor icon -->
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="app-name">Setbian</div>
+                    <div class="app-desc">Lightweight graphical tool focused on post-installation setup</div>
+                    <div class="card-actions">
+                        <a href="https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb" target="_blank" class="btn btn-primary" >Download .deb</a>
+                        <a href="app/setbian/setbian.html" class="btn btn-secondary">More Info</a>
+                    </div>
+                </div>
+
+                <!-- Example Placeholder Card 2 -->
+                <div class="app-card">
+                    <div class="app-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <div class="app-name">Setbian Term</div>
+                    <div class="app-desc">Modern terminal emulator with built-in theming.</div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
+                        <button class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">More Info</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Transparent App Listings Info -->
+        <section class="section info-section">
+            <div class="container">
+                <div class="info-grid">
+                    <div>
+                        <h2>📦 Transparent App Listings</h2>
+                        <ul class="contribution-list">
+                            <li><strong>Clear Functionality:</strong> Each app clearly states what it does.</li>
+                            <li><strong>Compatibility:</strong> Supported Debian versions listed upfront.</li>
+                            <li><strong>Installation:</strong> Direct methods via Setbian or manual .deb.</li>
+                            <li><strong>Licensing:</strong> Full disclosure of open-source vs proprietary status.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2>🚀 Publish Your App</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Developers can submit apps easily with:</p>
+                        <ul class="contribution-list">
+                            <li>App name & metadata</li>
+                            <li>GitHub / Official Website links</li>
+                            <li>Installation commands</li>
+                            <li>License details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributors Section -->
+        <section class="section container">
+            <h2>🤝 Built for Contributors</h2>
+            <div class="info-grid">
+                <div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">We welcome all forms of contribution:</p>
+                    <ul class="contribution-list">
+                        <li>💻 Code contributions</li>
+                        <li>🐞 Bug reports</li>
+                        <li>✨ Feature requests</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="contribution-list">
+                        <li>📚 Documentation improvements</li>
+                        <li>🌍 UX & accessibility suggestions</li>
+                        <li>🎨 Design refinements</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Message to Developers -->
+        <section class="section container">
+            <div class="quote-box">
+                <div class="quote-text">
+                    "If you believe in developers, build for Linux.<br>
+                    Linux grows when creators share, improve, and collaborate."
+                </div>
+                <div class="quote-sub">
+                    Setbian exists to support that belief — by turning ideas into accessible software.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About Setbian</h3>
+                    <ul>
+                        <li><a href="#">Vision & Roadmap</a></li>
+                        <li><a href="#">Press & Announcements</a></li>
+                        <li><a href="#">About the Project</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Developers</h3>
+                    <ul>
+                        <li><a href="#">Publish Your App</a></li>
+                        <li><a href="#">Contribute to Setbian</a></li>
+                        <li><a href="#">GitHub Repository</a></li>
+                        <li><a href="#">Report an Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Discussions</a></li>
+                        <li><a href="#">Updates & Releases</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Website</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                Setbian is not just about installing apps. It’s about making Linux more approachable without diluting its power.<br><br>
+                From click-based installation to a full app ecosystem — Setbian is a UX layer built by the community, for the community.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

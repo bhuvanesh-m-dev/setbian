@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian - Setbian App Store</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="setbian.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><a href="../../index.html">Setbian Portal</a></div>
+                <div><a href="../../index.html" class="btn btn-secondary">← Back to Store</a></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container section">
+
+        <!-- 1. App Overview -->
+        <div class="app-header">
+            <div class="app-header-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <circle cx="12" cy="12" r="4"></circle>
+                </svg>
+            </div>
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Setbian</h1>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1rem;">Lightweight GUI tool for post-installation setup on Debian-based systems.</p>
+                <div style="margin-bottom: 1rem;">
+                    <span class="app-meta-tag">System Utilities</span>
+                    <span class="app-meta-tag">Productivity</span>
+                    <span class="license-badge">MIT License</span>
+                </div>
+                <button id="downloadBtn" class="btn btn-primary" 
+                    style="padding: 0.8rem 2rem; font-size: 1rem;"><a href="https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb" target="_blank">Download .deb</a></button>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <!-- Left Col -->
+            <div>
+                <h2>What this app does</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8;">
+                    Setbian is a simple, open-source graphical tool designed to streamline post-installation configuration on fresh Debian installations. 
+                    It provides an intuitive checkbox interface for selecting and installing essential applications and tools, eliminating the need for numerous individual terminal commands.
+                    Ideal for beginners and experienced users alike, it requires only an active internet connection to function.
+                </p>
+
+                <h3>Key Features</h3>
+                <ul class="contribution-list" style="margin-top: 1rem;">
+                    <li>Checkbox-based selection of popular packages (e.g., Git, Curl, Firefox, VLC, Visual Studio Code, Telegram Desktop, GIMP, and more)</li>
+                    <li>Automated dependency resolution and installation</li>
+                    <li>Minimal dependencies, built with native Python libraries</li>
+                    <li>One-command installation and launch</li>
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Technical Details</h3>
+                <ul class="contribution-list" style="margin-top: 1rem;">
+                    <li><strong>Latest Version:</strong> 0.0.5 (as of recent releases)</li>
+                    <li><strong>Size:</strong> Approximately 50 KB (.deb package)</li>
+                    <li><strong>Supported Debian Versions:</strong> Debian 11 (Bullseye), Debian 12 (Bookworm), and derivatives</li>
+                    <li><strong>Architecture:</strong> noarch (Python-based)</li>
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Installation Method</h3>
+                <div
+                    style="background: #1c1c1f; padding: 1rem; border-radius: 8px; font-family: monospace; color: #a1a1aa; border: 1px solid #27272a;">
+                    wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/latest/download/setbian-latest.deb && sudo dpkg -i setbian.deb || (sudo apt --fix-broken install -y && sudo dpkg -i setbian.deb) && setbian
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    Alternatively, run directly from source: <code>git clone https://github.com/bhuvanesh-m-dev/setbian.git && cd setbian && python3 main.py</code>
+                </p>
+            </div>
+
+            <!-- Right Col -->
+            <div>
+                <h2>License & Copyright ⚖️</h2>
+                <div class="app-card" style="align-items: flex-start; text-align: left;">
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Open Source (MIT)</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        This software is free to use, modify, and distribute under the MIT License.
+                    </p>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        <strong>Developer:</strong> Bhuvanesh M<br>
+                        <strong>Source Repository:</strong> <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank">github.com/bhuvanesh-m-dev/setbian</a><br>
+                        <strong>Project Website:</strong> <a href="https://bhuvanesh-m-dev.github.io/setbian" target="_blank">bhuvanesh-m-dev.github.io/setbian</a><br>
+                        <strong>Copyright:</strong> © 2025 - Present Bhuvanesh M
+                    </p>
+                    <div
+                        style="padding: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; font-size: 0.8rem;">
+                        Setbian Portal facilitates discovery and installation of open-source Debian packages.<br>
+                        All software is sourced directly from official repositories or developer releases.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <div class="container footer-bottom">
+            <p>Setbian Portal - Community Driven App Store</p>
+        </div>
+    </footer>
+
+    <script src="setbian.js"></script>
+</body>
+
+</html>

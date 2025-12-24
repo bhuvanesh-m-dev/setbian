@@ -1,0 +1,39 @@
+/* ZenEdit Specific Styles */
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.app-header-icon {
+    width: 120px;
+    height: 120px;
+    background: #27272a;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--accent-color);
+}
+
+.app-meta-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+    color: var(--text-secondary);
+}
+
+.license-badge {
+    color: #4ade80;
+    /* Green for open source */
+    border: 1px solid #4ade80;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
