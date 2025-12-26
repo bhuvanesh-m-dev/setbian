@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute to Setbian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050505',
+                            card: '#0a0a0a',
+                            border: '#1f1f1f',
+                            accent: '#3b82f6', // A nice linux-y blue
+                            glow: 'rgba(59, 130, 246, 0.5)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Dynamic Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-blue {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fade In Animation classes */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative selection:bg-blue-500 selection:text-white">
+
+    <!-- The "Live" Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation / Header -->
+    <header class="fixed w-full top-0 z-50 border-b border-white/5 bg-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-mono font-bold text-xl tracking-tighter flex items-center gap-2">
+                <span class="text-blue-500 text-2xl">⚡</span> SETBIAN
+            </div>
+            <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="text-sm font-medium hover:text-white text-gray-400 transition-colors flex items-center gap-2 group">
+                <i class="fab fa-github text-lg group-hover:scale-110 transition-transform"></i>
+                <span class="hidden sm:inline">View Repository</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-20 px-6 max-w-5xl mx-auto">
+
+        <!-- Hero Section -->
+        <section class="fade-in-section mb-24 text-center">
+            <div class="inline-block px-3 py-1 mb-6 text-xs font-mono text-blue-400 bg-blue-900/20 rounded-full border border-blue-800">
+                Open Source Contribution
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                Contribute to <span class="text-gradient-blue">Setbian</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                Software becomes meaningful when people come together to improve it. 
+                Every contribution strengthens the Linux ecosystem.
+            </p>
+        </section>
+
+        <!-- Intro Text -->
+        <section class="fade-in-section mb-20 glass-card p-8 rounded-2xl border-l-4 border-blue-500">
+            <p class="text-gray-300 text-lg italic">
+                "If you are here reading this page, it already means you cared enough to explore, understand, or contribute — and I deeply appreciate that effort."
+            </p>
+        </section>
+
+        <!-- Ways to Contribute Grid -->
+        <section class="fade-in-section mb-24">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <span class="bg-blue-600/20 p-2 rounded-lg text-blue-400"><i class="fas fa-puzzle-piece"></i></span>
+                Ways You Can Contribute
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-blue-400 text-2xl mb-4"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="text-xl font-bold mb-2">App Code</h3>
+                    <p class="text-gray-400 text-sm">Submit app code to the <code class="bg-gray-800 px-1 py-0.5 rounded text-blue-200">apps_code_files</code> folder through Pull Requests.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-red-400 text-2xl mb-4"><i class="fas fa-bug"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Report Issues</h3>
+                    <p class="text-gray-400 text-sm">Found a bug? Report issues directly in the repository so we can fix them.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-yellow-400 text-2xl mb-4"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-xl font-bold mb-2">New Features</h3>
+                    <p class="text-gray-400 text-sm">Suggest new features or improvements to make Setbian better.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-green-400 text-2xl mb-4"><i class="fas fa-book"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Documentation</h3>
+                    <p class="text-gray-400 text-sm">Help with documentation or wording clarity to assist new users.</p>
+                </div>
+                <!-- Card 5 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-purple-400 text-2xl mb-4"><i class="fas fa-palette"></i></div>
+                    <h3 class="text-xl font-bold mb-2">UI / UX</h3>
+                    <p class="text-gray-400 text-sm">Share feedback on the interface and user experience design.</p>
+                </div>
+                <!-- Card 6 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="text-pink-400 text-2xl mb-4"><i class="fas fa-globe"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Spread Awareness</h3>
+                    <p class="text-gray-400 text-sm">Recommend the project to others. Every type of contribution matters.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contribution Process -->
+        <section class="fade-in-section mb-24">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <span class="bg-blue-600/20 p-2 rounded-lg text-blue-400"><i class="fas fa-tools"></i></span>
+                Contribution Process
+            </h2>
+            
+            <div class="relative border-l border-gray-800 ml-4 md:ml-6 space-y-12">
+                <!-- Step 1 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-[17px] top-0 flex h-9 w-9 items-center justify-center rounded-full bg-blue-900 ring-4 ring-black border border-blue-500 font-mono font-bold text-blue-200">1</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">Fork the Repository</h3>
+                    <p class="text-gray-400 mb-4">Start by creating a fork of the main repository to your own account.</p>
+                    <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors bg-blue-500/10 px-4 py-2 rounded-lg border border-blue-500/20">
+                        <i class="fab fa-github"></i> github.com/bhuvanesh-m-dev/setbian
+                    </a>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-[17px] top-0 flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 ring-4 ring-black border border-gray-700 font-mono font-bold text-gray-400">2</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">Make Your Changes</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1 ml-2">
+                        <li>Adding app files</li>
+                        <li>Fixing bugs</li>
+                        <li>Improving UI wording</li>
+                        <li>Updating docs</li>
+                    </ul>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-[17px] top-0 flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 ring-4 ring-black border border-gray-700 font-mono font-bold text-gray-400">3</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">Commit & Push</h3>
+                    <p class="text-gray-400">Commit your changes with clear messages and push them to your forked repository.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-[17px] top-0 flex h-9 w-9 items-center justify-center rounded-full bg-green-900 ring-4 ring-black border border-green-500 font-mono font-bold text-green-200">4</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">Submit a Pull Request</h3>
+                    <p class="text-gray-400 mb-4">Setbian will accept your app or any suggestions.</p>
+                    <a href="https://github.com/bhuvanesh-m-dev/setbian/pulls" target="_blank" class="inline-flex items-center gap-2 text-sm text-green-400 hover:text-green-300 transition-colors bg-green-500/10 px-4 py-2 rounded-lg border border-green-500/20">
+                        <i class="fas fa-code-branch"></i> Submit PR
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ethics & Values -->
+        <section class="fade-in-section mb-24 grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-blue-600/20 p-2 rounded-lg text-blue-400"><i class="fas fa-balance-scale"></i></span>
+                    Respect, Transparency & Ethics
+                </h2>
+                <div class="space-y-4 text-gray-400">
+                    <p>Setbian will value and respect every contributor. At the same time, Setbian ensures:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Proper licensing clarity</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Respect for original developers</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Transparency in app listings</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Ethical publishing standards</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="glass-card p-8 rounded-xl bg-gradient-to-br from-gray-900 to-black text-center border-t border-blue-900">
+                <h3 class="text-xl font-bold mb-4 text-white">Community First</h3>
+                <p class="text-gray-400 italic">
+                    "Setbian exists to support developers, learners, and the community — not to replace or overshadow original creators."
+                </p>
+            </div>
+        </section>
+
+        <!-- Personal Thank You -->
+        <section class="fade-in-section mb-20 text-center relative overflow-hidden glass-card p-10 rounded-2xl">
+            <!-- Decorative Glow -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <i class="fas fa-heart text-4xl text-red-500 mb-6 animate-pulse-slow"></i>
+                <h2 class="text-3xl font-bold mb-6">A Personal Thank-You</h2>
+                <div class="max-w-2xl mx-auto space-y-4 text-gray-300">
+                    <p>
+                        Thank you so much for visiting this page and for even considering contributing to Setbian.
+                    </p>
+                    <p>
+                        Whether you submit code, share feedback, or simply spend your time reading this — it truly means a lot to me. Your effort, attention, and goodwill are valued and appreciated.
+                    </p>
+                    <p class="text-blue-200">
+                        Even if you aren’t able to contribute right now, the fact that you reached this page still matters — because it shows curiosity, care, and connection with the project.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Links -->
+        <footer class="fade-in-section glass-card rounded-2xl p-8 md:p-12 text-center">
+            <h2 class="text-2xl font-bold mb-8">Quick Links</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" 
+                   class="flex items-center justify-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all hover:scale-105 group">
+                    <i class="fab fa-github text-xl"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 font-mono">CODE</div>
+                        <div class="font-bold">Repository</div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/issues" target="_blank" 
+                   class="flex items-center justify-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all hover:scale-105 group">
+                    <i class="fas fa-exclamation-circle text-red-400 text-xl"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 font-mono">BUGS</div>
+                        <div class="font-bold">Issues Report</div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/pulls" target="_blank" 
+                   class="flex items-center justify-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all hover:scale-105 group">
+                    <i class="fas fa-code-branch text-green-400 text-xl"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500 font-mono">CONTRIBUTE</div>
+                        <div class="font-bold">Pull Requests</div>
+                    </div>
+                </a>
+            </div>
+            <p class="mt-12 text-sm text-gray-600">
+                Setbian grows because of people like you — and I am grateful for every step you take toward supporting or improving this project.
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. Dynamic Canvas Background (The "Live" Element) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Configuration
+        const particleCount = 60;
+        const connectionDistance = 150;
+        const mouseDistance = 200;
+
+        let mouse = { x: null, y: null };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Very slow horizontal movement
+                this.vy = (Math.random() - 0.5) * 0.5; // Very slow vertical movement
+                this.size = Math.random() * 2 + 1;
+                this.baseColor = 'rgba(100, 116, 139, '; // Slate color base
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges (or wrap around, here we bounce for contained feel)
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse interaction
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouseDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouseDistance - distance) / mouseDistance;
+                        const directionX = forceDirectionX * force * 0.5; // Push strength
+                        const directionY = forceDirectionY * force * 0.5;
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.baseColor + '0.4)';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Draw connections
+                for (let j = i; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        let opacity = 1 - (distance / connectionDistance);
+                        ctx.strokeStyle = 'rgba(59, 130, 246, ' + (opacity * 0.15) + ')'; // Blue tint connections
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        // Initialize Animation
+        resize();
+        initParticles();
+        animate();
+
+
+        // --- 2. Scroll Reveal Observer ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Stop observing once visible (optional, remove if you want re-trigger)
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
