@@ -4,177 +4,336 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Setbian App Portal - Discover. Install. Contribute.</title>
-    <link rel="stylesheet" href="style.css">
     <meta name="description" content="A community-driven app discovery portal built to enhance the Linux user experience — starting with Debian.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Dynamic Background -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
 
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Setbian Portal</div>
-                <!-- Future: Search bar or filters -->
-                <div style="font-size: 0.9rem; color: var(--text-secondary);">v1.0.0</div>
+                <div class="logo">
+                    <div class="logo-icon">S</div>
+                    Setbian Portal
+                </div>
+                <div class="version-badge">BETA v1.0.0</div>
             </nav>
         </div>
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero reveal">
             <div class="container">
-                <h1>Discover. Install. Contribute.</h1>
-                <p>A community-driven app discovery portal built to enhance the Linux user experience — starting with Debian.</p>
+                <h1>Discover. Install.<br>Contribute.</h1>
+                <p>The definitive app ecosystem for the modern Linux desktop.<br>Curated for performance, built for Debian.</p>
+                
+                <div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Verified Apps</div>
+    </div>
+    <!--<div class="stat-item">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Updated Today</div>
+    </div> -->
+    <div class="stat-item">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Contributors</div>
+    </div>
+</div>
             </div>
         </section>
 
         <section class="container section">
-            <h2 style="text-align: center;">Featured Apps</h2>
-            <div class="app-grid">
-                
-                <!-- ZenEdit App Card -->
-                <div class="app-card">
-                    <div class="app-icon">
-                        <!-- Placeholder Icon: Simple Z similar to text editor icon -->
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 20h9"></path>
-                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                        </svg>
-                    </div>
-                    <div class="app-name">Setbian</div>
-                    <div class="app-desc">Lightweight graphical tool focused on post-installation setup</div>
-                    <div class="card-actions">
-                        <a href="https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb" target="_blank" class="btn btn-primary" >Download .deb</a>
-                        <a href="app/setbian/setbian.html" class="btn btn-secondary">More Info</a>
-                    </div>
+            <div class="controls-wrapper reveal">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search apps (e.g., 'terminal', 'editor')...">
                 </div>
-
-                <!-- Example Placeholder Card 2 -->
-                <div class="app-card">
-                    <div class="app-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    </div>
-                    <div class="app-name">Setbian Term</div>
-                    <div class="app-desc">Modern terminal emulator with built-in theming.</div>
-                    <div class="card-actions">
-                        <button class="btn btn-primary" disabled style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
-                        <button class="btn btn-secondary" disabled style="opacity: 0.5; cursor: not-allowed;">More Info</button>
-                    </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterApps('all')">All</button>
+                    <button class="filter-btn" onclick="filterApps('featured')">Featured</button>
+                    <button class="filter-btn" onclick="filterApps('tools')">Tools</button>
+                    <button class="filter-btn" onclick="filterApps('utilities')">Utilities</button>
+                    <button class="filter-btn" onclick="filterApps('development')">Dev</button>
                 </div>
-
+            </div>
+            
+            <div style="text-align: center; margin: 4rem 0;" id="loadingIndicator">
+                <span class="loader"></span>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">Syncing repository...</p>
+            </div>
+            
+            <div class="app-grid" id="appGrid">
+                <!-- Cards injected here -->
             </div>
         </section>
 
-        <!-- Transparent App Listings Info -->
-        <section class="section info-section">
+        <section class="info-section reveal">
             <div class="container">
                 <div class="info-grid">
-                    <div>
-                        <h2>📦 Transparent App Listings</h2>
+                    <div class="info-card">
+                        <h2>📦 Transparent Listings</h2>
                         <ul class="contribution-list">
-                            <li><strong>Clear Functionality:</strong> Each app clearly states what it does.</li>
-                            <li><strong>Compatibility:</strong> Supported Debian versions listed upfront.</li>
-                            <li><strong>Installation:</strong> Direct methods via Setbian or manual .deb.</li>
-                            <li><strong>Licensing:</strong> Full disclosure of open-source vs proprietary status.</li>
+                            <li><strong>Verified Logic</strong> Clean code, no tracking.</li>
+                            <li><strong>Debian Native</strong> Optimized for apt & dpkg.</li>
+                            <li><strong>Direct Install</strong> One-click or terminal command.</li>
+                            <li><strong>Open Source</strong> 100% MIT/GPL/Apache licensed.</li>
                         </ul>
                     </div>
-                    <div>
-                        <h2>🚀 Publish Your App</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Developers can submit apps easily with:</p>
+                    <div class="info-card">
+                        <h2>🚀 For Developers</h2>
                         <ul class="contribution-list">
-                            <li>App name & metadata</li>
-                            <li>GitHub / Official Website links</li>
-                            <li>Installation commands</li>
-                            <li>License details</li>
+                            <li><strong>Zero Fees</strong> Free to publish, free to host.</li>
+                            <li><strong>Git Integration</strong> Syncs with your repo releases.</li>
+                            <li><strong>Auto Builds</strong> CI/CD pipeline support coming.</li>
+                            <li><strong>Community</strong> Direct feedback from power users.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contributors Section -->
-        <section class="section container">
-            <h2>🤝 Built for Contributors</h2>
-            <div class="info-grid">
-                <div>
-                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">We welcome all forms of contribution:</p>
-                    <ul class="contribution-list">
-                        <li>💻 Code contributions</li>
-                        <li>🐞 Bug reports</li>
-                        <li>✨ Feature requests</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="contribution-list">
-                        <li>📚 Documentation improvements</li>
-                        <li>🌍 UX & accessibility suggestions</li>
-                        <li>🎨 Design refinements</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Message to Developers -->
-        <section class="section container">
+        <section class="container reveal">
             <div class="quote-box">
                 <div class="quote-text">
-                    "If you believe in developers, build for Linux.<br>
-                    Linux grows when creators share, improve, and collaborate."
+                    "Linux grows when creators share, improve, and collaborate without barriers."
                 </div>
-                <div class="quote-sub">
-                    Setbian exists to support that belief — by turning ideas into accessible software.
-                </div>
+                <div style="color: var(--accent-primary);">— The Setbian Philosophy</div>
             </div>
         </section>
-
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>About Setbian</h3>
-                    <ul>
-                        <li><a href="#">Vision & Roadmap</a></li>
-                        <li><a href="#">Press & Announcements</a></li>
-                        <li><a href="#">About the Project</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Developers</h3>
-                    <ul>
-                        <li><a href="#">Publish Your App</a></li>
-                        <li><a href="#">Contribute to Setbian</a></li>
-                        <li><a href="#">GitHub Repository</a></li>
-                        <li><a href="#">Report an Issue</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Community</h3>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Discussions</a></li>
-                        <li><a href="#">Updates & Releases</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Connect</h3>
-                    <ul>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Website</a></li>
-                    </ul>
-                </div>
+<footer style="
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    overflow: hidden;
+">
+    <!-- Gradient top border -->
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    "></div>
+    
+    <!-- Background gradient overlay -->
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    "></div>
+
+    <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+        <div style="
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        ">
+            <!-- Brand -->
+            <div>
+                <span style="font-size: 1.5rem; line-height: 2rem; font-weight: bold; color: white; margin-bottom: 1rem; display: block;">Setbian</span>
+                <p style="color: rgba(209, 213, 219, 0.8); font-size: 0.875rem; line-height: 1.625;">
+                    Together, we'll make this year count for Linux — through learning, sharing, and contribution.
+                    Setbian turns setup into a meaningful part of the journey.
+                </p>
             </div>
-            <div class="footer-bottom">
-                Setbian is not just about installing apps. It’s about making Linux more approachable without diluting its power.<br><br>
-                From click-based installation to a full app ecosystem — Setbian is a UX layer built by the community, for the community.
+            
+            <!-- Ecosystem Links -->
+            <div>
+                <h5 style="color: white; font-weight: bold; margin-bottom: 1rem;">Ecosystem</h5>
+                <ul style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">App Portal</a></li>
+                    <li><a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Installer</a></li>
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/about" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">About Setbian</a></li>
+                    <li>
+                        <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/vision-and-roadmap" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; cursor: pointer;">
+                            <span style="color: rgba(209, 213, 219, 0.9); transition: color 0.2s; font-weight: 500;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.9)'">Vision & Roadmap</span>
+                            <i data-lucide="sparkles" style="width: 0.75rem; height: 0.75rem; color: #dc2626;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Resources Links -->
+            <div>
+                <h5 style="color: white; font-weight: bold; margin-bottom: 1rem;">Resources</h5>
+                <ul style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/documentation" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Documentation</a></li>
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/updates-and-releases" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Updates & Releases</a></li>
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/press-and-announcements" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Press & Announcements</a></li>
+                </ul>
+            </div>
+            
+            <!-- Community Links -->
+            <div>
+                <h5 style="color: white; font-weight: bold; margin-bottom: 1rem;">Community</h5>
+                <ul style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+                    <li>
+                        <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; cursor: pointer;">
+                            <span style="color: #dc2626; transition: color 0.2s; font-weight: 500;" onmouseover="this.style.color='#e11d48'" onmouseout="this.style.color='#dc2626'">Publish Your App</span>
+                            <i data-lucide="arrow-up-right" style="width: 0.75rem; height: 0.75rem; color: #dc2626;"></i>
+                        </a>
+                    </li>
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/contribute" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Contribute</a></li>
+                    <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/discussions" target="_blank" style="color: rgba(209, 213, 219, 0.8); transition: color 0.2s; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='rgba(209, 213, 219, 0.8)'">Discussions</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <!-- Bottom Bar -->
+        <div style="
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: rgba(209, 213, 219, 0.7);
+        ">
+            <p> &copy; 2025 - Present Bhuvanesh M. Open Source under MIT License.</p>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span>Made with ❤️, For Debian Users</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" style="
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        padding: 0.75rem;
+        border-radius: 9999px;
+        background: rgba(220, 38, 38, 0.2);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(220, 38, 38, 0.3);
+        color: white;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(2.5rem);
+        cursor: pointer;
+        z-index: 50;
+        pointer-events: none;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    " onmouseover="this.style.background='rgba(220, 38, 38, 0.3)'; this.style.boxShadow='0 0 20px rgba(220, 38, 38, 0.3)'; this.style.transform='scale(1.05)'" 
+        onmouseout="this.style.background='rgba(220, 38, 38, 0.2)'; this.style.boxShadow='none'; this.style.transform='scale(1)'">
+        <i data-lucide="arrow-up" style="width: 1.25rem; height: 1.25rem;"></i>
+    </button>
+    
+    <!-- Responsive CSS Media Query -->
+    <div style="display: none;">
+        <style>
+            @media (min-width: 768px) {
+                .footer-grid {
+                    grid-template-columns: 1fr repeat(3, 1fr) !important;
+                }
+                .footer-bottom {
+                    flex-direction: row !important;
+                }
+            }
+        </style>
+    </div>
+
+    <!-- JavaScript for scroll-to-top button -->
+    <script>
+        // Apply responsive grid on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridElement = document.querySelector('footer > div > div');
+            if (gridElement) {
+                gridElement.classList.add('footer-grid');
+            }
+            
+            const bottomBar = document.querySelector('footer > div > div:last-child');
+            if (bottomBar) {
+                bottomBar.classList.add('footer-bottom');
+            }
+        });
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.style.opacity = '1';
+                scrollTopBtn.style.transform = 'translateY(0)';
+                scrollTopBtn.style.pointerEvents = 'auto';
+            } else {
+                scrollTopBtn.style.opacity = '0';
+                scrollTopBtn.style.transform = 'translateY(2.5rem)';
+                scrollTopBtn.style.pointerEvents = 'none';
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Initialize Lucide icons if available
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</footer>
+    
+    <!-- Modals -->
+    <div class="modal-overlay" id="appModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>App Details</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalContent"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="infoModalTitle">Information</h3>
+                <button class="modal-close" onclick="closeInfoModal()">×</button>
+            </div>
+            <div class="modal-body" id="infoModalContent"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
