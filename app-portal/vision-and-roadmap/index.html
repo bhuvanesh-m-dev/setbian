@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian — Vision & Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['JetBrains Mono', 'monospace'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        setbian: {
+                            bg: '#000000',
+                            card: '#0a0a0a',
+                            border: '#333333',
+                            green: '#00ff41', // Matrix/Terminal Green
+                            blue: '#00b0ff',  // Bright Terminal Blue
+                            text: '#e2e8f0',
+                            muted: '#666666'
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'cursor-blink': 'blink 1s step-end infinite',
+                    },
+                    keyframes: {
+                        blink: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+        }
+        
+        /* CRT Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        .terminal-text {
+            color: #00ff41;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            border-color: #00ff41;
+        }
+
+        .pillar-card {
+            background: #050505;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        .pillar-card:hover {
+            border-color: #00ff41;
+            transform: translateY(-2px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222; 
+            border: 1px solid #333;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff41; 
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-setbian-green selection:text-black">
+
+    <div class="scanlines"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-xl font-bold tracking-tight text-white">
+                        <span class="text-setbian-green">root@setbian</span>:~$
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-1">
+                        <a href="#vision" class="text-gray-400 hover:text-setbian-green hover:bg-white/5 px-3 py-2 rounded text-sm transition font-bold">./Vision</a>
+                        <a href="#pillars" class="text-gray-400 hover:text-setbian-green hover:bg-white/5 px-3 py-2 rounded text-sm transition font-bold">./Pillars</a>
+                        <a href="#roadmap" class="text-gray-400 hover:text-setbian-green hover:bg-white/5 px-3 py-2 rounded text-sm transition font-bold">./Roadmap</a>
+                        <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="ml-4 text-white border border-white/20 hover:border-setbian-green hover:text-setbian-green px-4 py-2 rounded text-sm font-bold transition flex items-center bg-black">
+                            <i class="fa-brands fa-github mr-2"></i> git clone
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-black border-b border-white/10" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#vision" class="block text-gray-400 hover:text-setbian-green px-3 py-2 text-base font-bold">./Vision</a>
+                <a href="#pillars" class="block text-gray-400 hover:text-setbian-green px-3 py-2 text-base font-bold">./Pillars</a>
+                <a href="#roadmap" class="block text-gray-400 hover:text-setbian-green px-3 py-2 text-base font-bold">./Roadmap</a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" class="block text-gray-400 hover:text-setbian-green px-3 py-2 text-base font-bold">git clone</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left relative">
+        <div class="border-l-2 border-setbian-green pl-6 mb-8 animate-pulse-fast">
+            <p class="text-setbian-green text-sm font-bold tracking-widest uppercase mb-2">System Status: Booting Vision...</p>
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-6 text-white min-h-[160px] sm:min-h-[140px]">
+            <span id="typewriter"></span><span class="animate-cursor-blink text-setbian-green">_</span>
+        </h1>
+        
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 leading-relaxed font-light">
+            // Setbian is a UX-focused ecosystem built with empathy.<br>
+            // Where discovering, installing, and contributing becomes simple.
+        </p>
+        
+        <div class="mt-10 flex flex-wrap gap-4">
+            <a href="https://bhuvanesh-m-dev.github.io/setbian" target="_blank" class="glow-hover group px-6 py-3 rounded border border-setbian-green text-setbian-green hover:bg-setbian-green hover:text-black font-bold transition flex items-center">
+                <i class="fa-solid fa-terminal mr-2"></i>
+                <span>./launch_site.sh</span>
+            </a>
+            <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/" target="_blank" class="glow-hover px-6 py-3 rounded border border-setbian-blue text-setbian-blue hover:bg-setbian-blue hover:text-black font-bold transition flex items-center">
+                <i class="fa-solid fa-rocket mr-2"></i>
+                <span>./open_portal.sh</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Vision Detail Section -->
+    <section id="vision" class="py-20 border-y border-white/10 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h2 class="text-2xl font-bold mb-6 text-white flex items-center">
+                        <span class="text-setbian-green mr-2">#</span> Define: Vision
+                    </h2>
+                    <div class="space-y-6 text-gray-400">
+                        <p class="leading-relaxed">
+                            <span class="text-setbian-green">>></span> Setbian began as a simple Debian setup tool, but the mission has grown. It's about how people connect with software.
+                        </p>
+                        <p class="leading-relaxed">
+                            <span class="text-setbian-green">>></span> I am not trying to simplify Linux to the point of weakness.
+My goal is to make it approachable, collaborative, and emotionally meaningful — especially for fellow developers and learners.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-3 border border-white/10 rounded hover:border-setbian-green/50 transition bg-white/5">
+                            <i class="fa-solid fa-heart text-setbian-green mb-2"></i>
+                            <div class="text-sm font-bold text-white">Respect for devs</div>
+                        </div>
+                        <div class="p-3 border border-white/10 rounded hover:border-setbian-blue/50 transition bg-white/5">
+                            <i class="fa-solid fa-code-branch text-setbian-blue mb-2"></i>
+                            <div class="text-sm font-bold text-white">Community Driven</div>
+                        </div>
+                        <div class="p-3 border border-white/10 rounded hover:border-purple-500/50 transition bg-white/5">
+                            <i class="fa-solid fa-eye text-purple-500 mb-2"></i>
+                            <div class="text-sm font-bold text-white">Transparency</div>
+                        </div>
+                        <div class="p-3 border border-white/10 rounded hover:border-yellow-500/50 transition bg-white/5">
+                            <i class="fa-solid fa-bolt text-yellow-500 mb-2"></i>
+                            <div class="text-sm font-bold text-white">Power UX</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <!-- Code Block Look -->
+                    <div class="bg-[#050505] rounded border border-white/20 p-6 font-mono text-sm shadow-2xl relative overflow-hidden">
+                        <div class="flex items-center space-x-2 mb-4 border-b border-white/10 pb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            <span class="ml-4 text-xs text-gray-600">vision.json</span>
+                        </div>
+                        <div class="text-gray-400">
+                            <span class="text-purple-400">const</span> <span class="text-blue-400">vision</span> = {<br>
+                            &nbsp;&nbsp;<span class="text-white">goal</span>: <span class="text-green-400">"Build a Human-Centered Ecosystem"</span>,<br>
+                            &nbsp;&nbsp;<span class="text-white">core_values</span>: [<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"Discovery"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"Contribution"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"Collaboration"</span><br>
+                            &nbsp;&nbsp;],<br>
+                            &nbsp;&nbsp;<span class="text-white">status</span>: <span class="text-blue-400">true</span>,<br>
+                            &nbsp;&nbsp;<span class="text-white">feels</span>: <span class="text-green-400">"Natural & Human"</span><br>
+                            };
+                        </div>
+                        <div class="absolute bottom-4 right-4 text-xs text-gray-700 animate-pulse">
+                            compiling...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Section -->
+    <section id="pillars" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold mb-4 text-white"><span class="text-setbian-green">function</span> getPillars()</h2>
+            <p class="text-gray-500 border-l border-gray-700 pl-4">The project executes on two main threads.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Pillar 1: Installer -->
+            <div class="pillar-card p-8 rounded relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition duration-500">
+                    <i class="fa-solid fa-terminal text-6xl text-setbian-green"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 font-mono">
+                    <span class="text-setbian-green">01.</span> Setbian Installer
+                </h3>
+                <p class="text-xs text-setbian-green mb-6 border border-setbian-green/30 inline-block px-2 py-1 rounded">TYPE: SYSTEM_TOOL</p>
+                
+                <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+                    A UX-focused Debian setup experience that installs software with clicks, helps beginners feel confident, yet preserves Linux openness.
+                </p>
+                <div class="space-y-2 mb-8 text-sm">
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-green mr-3">✓</span> Beginner Confidence
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-green mr-3">✓</span> Preserves Openness
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-green mr-3">✓</span> GUI Installation
+                    </div>
+                </div>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" class="text-white text-sm hover:text-setbian-green transition font-bold border-b border-transparent hover:border-setbian-green inline-block pb-1">
+                    cd ./installer_repo <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                </a>
+            </div>
+
+            <!-- Pillar 2: App Portal -->
+            <div class="pillar-card p-8 rounded relative overflow-hidden group">
+                 <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition duration-500">
+                    <i class="fa-solid fa-network-wired text-6xl text-setbian-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2 font-mono">
+                    <span class="text-setbian-blue">02.</span> App Portal
+                </h3>
+                <p class="text-xs text-setbian-blue mb-6 border border-setbian-blue/30 inline-block px-2 py-1 rounded">TYPE: COMMUNITY_HUB</p>
+                
+                <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+                    A community-driven app discovery space where developers submit code via PRs and users download via intuitive interfaces or QR codes.
+                </p>
+                <div class="space-y-2 mb-8 text-sm">
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-blue mr-3">✓</span> PR-based Submissions
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-blue mr-3">✓</span> QR Code Sharing
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-setbian-blue mr-3">✓</span> Learn & Install
+                    </div>
+                </div>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/tree/main/apps_code_files" class="text-white text-sm hover:text-setbian-blue transition font-bold border-b border-transparent hover:border-setbian-blue inline-block pb-1">
+                    cat ./app_code_files <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="py-20 bg-black relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-4 text-white"><span class="text-purple-500">while</span>(true) { Roadmap }</h2>
+                <p class="text-gray-500">Executing sequence: Foundation -> Future</p>
+            </div>
+
+            <div class="relative border-l border-white/10 ml-4 md:ml-10 space-y-12">
+                
+                <!-- Phase 1 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <span class="absolute -left-[5px] top-2 w-2 h-2 bg-setbian-green rounded-full shadow-[0_0_10px_#00ff41]"></span>
+                    <h3 class="text-xl font-bold text-white flex items-center">
+                        Phase 1: Foundation
+                        <span class="ml-3 px-2 py-0.5 text-[10px] bg-setbian-green text-black font-bold uppercase tracking-wide">Running</span>
+                    </h3>
+                    <div class="mt-4 bg-[#050505] p-5 border border-white/10 group-hover:border-setbian-green transition">
+                        <code class="text-xs text-setbian-green block mb-3">// Current Tasks</code>
+                        <ul class="space-y-2 text-sm text-gray-400 font-mono">
+                            <li>[x] Build stable Installer core</li>
+                            <li>[x] Launch Basic App Portal</li>
+                            <li>[ ] Intro to apps_code_files model</li>
+                            <li>[ ] QR-code sharing support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <span class="absolute -left-[5px] top-2 w-2 h-2 bg-setbian-blue rounded-full"></span>
+                    <h3 class="text-xl font-bold text-white">Phase 2: Community Growth</h3>
+                    <div class="mt-4 bg-[#050505] p-5 border border-white/10 group-hover:border-setbian-blue transition opacity-80 group-hover:opacity-100">
+                        <code class="text-xs text-setbian-blue block mb-3">// Todo Queue</code>
+                        <ul class="space-y-2 text-sm text-gray-400 font-mono">
+                            <li>[ ] Improve onboarding</li>
+                            <li>[ ] Transparent licensing notices</li>
+                            <li>[ ] Ethical software publishing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <span class="absolute -left-[5px] top-2 w-2 h-2 bg-purple-500 rounded-full"></span>
+                    <h3 class="text-xl font-bold text-white">Phase 3: Ecosystem Expansion</h3>
+                    <div class="mt-4 bg-[#050505] p-5 border border-white/10 group-hover:border-purple-500 transition opacity-60 group-hover:opacity-100">
+                        <ul class="space-y-2 text-sm text-gray-400 font-mono">
+                            <li>[ ] Developer profile references</li>
+                            <li>[ ] App history & learning pages</li>
+                            <li>[ ] Reliability improvements</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <span class="absolute -left-[5px] top-2 w-2 h-2 bg-gray-500 rounded-full"></span>
+                    <h3 class="text-xl font-bold text-gray-500">Phase 4: Future-Ready</h3>
+                    <div class="mt-4 bg-[#050505] p-5 border border-dashed border-white/10 opacity-40 group-hover:opacity-80 transition">
+                         <ul class="space-y-2 text-sm text-gray-500 font-mono">
+                            <li>[?] Privacy-respecting insights</li>
+                            <li>[?] Metadata-based verification</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="py-20 border-t border-white/10 bg-[#020202]">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-8 text-white">
+                /* Philosophy */
+            </h2>
+            <div class="text-lg text-gray-400 space-y-6 font-light">
+                <p>
+                    This project grows <span class="text-setbian-green font-bold">slowly</span> and <span class="text-setbian-green font-bold">ethically</span>.
+                </p>
+                <div class="bg-black p-8 border border-white/10 mt-8 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-setbian-green"></div>
+                    <p class="text-xl text-white font-mono">
+                        "Setbian is not about building software fast.<br>
+                        It is about building <span class="text-setbian-blue">software culture</span> that lasts."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <span class="text-setbian-green font-bold">root@setbian:~$</span>
+                    <span class="text-gray-500 text-sm">exit 0</span>
+                </div>
+                <div class="flex space-x-6 text-sm text-gray-500 font-mono">
+                    <a href="https://github.com/bhuvanesh-m-dev/setbian" class="hover:text-setbian-green transition">[GitHub]</a>
+                    <a href="https://github.com/bhuvanesh-m-dev/setbian/tree/main/apps_code_files" class="hover:text-setbian-blue transition">[Source]</a>
+                    <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/" class="hover:text-purple-400 transition">[Portal]</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Typing Effect
+        const textToType = "From a Tool to a Human-Centered Linux Ecosystem";
+        const typeWriterElement = document.getElementById('typewriter');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < textToType.length) {
+                typeWriterElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Typing speed
+            }
+        }
+
+        // Particle Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'; // Very faint dots
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.floor(window.innerWidth / 10); // Responsive count
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections
+            ctx.strokeStyle = 'rgba(0, 255, 65, 0.05)'; // Faint green lines
+            ctx.lineWidth = 0.5;
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Connect particles close to each other
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Init
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+        
+        // Start everything
+        resize();
+        initParticles();
+        animateParticles();
+        
+        // Start typing after a slight delay
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
