@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050505',
+                            card: '#0a0a0a',
+                            border: '#1f1f1f',
+                            accent: '#3b82f6', 
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Dynamic Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hover effect for documentation cards */
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+        }
+        
+        /* Subtle shine effect on hover */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fade In Animation classes */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative selection:bg-purple-500 selection:text-white">
+
+    <!-- The "Live" Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation / Header -->
+    <header class="fixed w-full top-0 z-50 border-b border-white/5 bg-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-mono font-bold text-xl tracking-tighter flex items-center gap-2">
+                <span class="text-blue-500 text-2xl">⚡</span> SETBIAN <span class="text-gray-500 text-sm font-normal pt-1">/ DOCS</span>
+            </div>
+            <nav class="flex gap-4">
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/" class="text-sm font-medium hover:text-white text-gray-400 transition-colors">Home</a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="text-sm font-medium hover:text-white text-gray-400 transition-colors flex items-center gap-2 group">
+                    <i class="fab fa-github text-lg group-hover:scale-110 transition-transform"></i>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
+
+        <!-- Hero Section -->
+        <section class="fade-in-section mb-20 text-center">
+            <div class="inline-block px-3 py-1 mb-6 text-xs font-mono text-purple-400 bg-purple-900/20 rounded-full border border-purple-800">
+                Knowledge Base
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+                Setbian <span class="text-gradient">Documentation</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                The purpose of this documentation is to help users, contributors, and fellow developers understand Setbian — how it works, how to use it, and how to become part of the ecosystem.
+            </p>
+        </section>
+
+        <!-- Intro Block -->
+        <section class="fade-in-section mb-24 glass-card p-8 rounded-2xl border-l-4 border-purple-500">
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="text-purple-400 text-4xl hidden md:block opacity-80">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Built for Clarity</h3>
+                    <p class="text-gray-300">
+                        I wrote this documentation with simplicity in mind, so that anyone — whether a beginner or an experienced developer — can follow the flow with confidence.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Index Grid -->
+        <section class="fade-in-section mb-24">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <span class="bg-blue-600/20 p-2 rounded-lg text-blue-400"><i class="fas fa-compass"></i></span>
+                Documentation Index
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 1. Introduction -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">01</span>
+                        <i class="fas fa-home text-blue-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-blue-300 transition-colors">Introduction to Setbian</h3>
+                    <p class="text-gray-400 text-sm flex-grow">Homepage and generic project overview.</p>
+                    <div class="mt-4 text-blue-500 text-sm font-medium flex items-center gap-2">
+                        Read <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+                <!-- 2. App Portal Guide -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">02</span>
+                        <i class="fas fa-store text-green-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-green-300 transition-colors">App Portal Guide</h3>
+                    <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-4 flex-grow">
+                        <li>What the App Portal is</li>
+                        <li>Download & More-Info flow</li>
+                        <li>QR-code sharing support</li>
+                    </ul>
+                    <div class="mt-auto text-green-500 text-sm font-medium flex items-center gap-2">
+                        Read <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+                <!-- 3. Publish Your App -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app/" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">03</span>
+                        <i class="fas fa-upload text-yellow-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-yellow-300 transition-colors">Publish Your App</h3>
+                    <p class="text-xs text-yellow-500/50 uppercase font-bold mb-2">Developer Guide</p>
+                    <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-4 flex-grow">
+                        <li>Fork → add app → PR workflow</li>
+                        <li>Metadata expectations</li>
+                        <li>Publishing rules & ethics</li>
+                    </ul>
+                    <div class="mt-auto text-yellow-500 text-sm font-medium flex items-center gap-2">
+                        Start Publishing <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+                <!-- 4. Contribute -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/contribute/" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">04</span>
+                        <i class="fas fa-hand-holding-heart text-red-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-red-300 transition-colors">Contribute to Setbian</h3>
+                    <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-4 flex-grow">
+                        <li>Ways to contribute</li>
+                        <li>Reporting bugs / improvements</li>
+                        <li>Respect & transparency values</li>
+                    </ul>
+                    <div class="mt-auto text-red-500 text-sm font-medium flex items-center gap-2">
+                        Get Involved <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+                <!-- 5. Licensing -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/licensing" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">05</span>
+                        <i class="fas fa-scale-balanced text-purple-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-purple-300 transition-colors">Licensing & Transparency</h3>
+                    <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-4 flex-grow">
+                        <li>Open-source handling</li>
+                        <li>Proprietary disclosure</li>
+                        <li>Ethics statement</li>
+                    </ul>
+                    <div class="mt-auto text-purple-500 text-sm font-medium flex items-center gap-2">
+                        Read Policy <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+                <!-- 6. Vision -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/vision-and-roadmap/" target="_blank" class="glass-card p-6 rounded-xl group h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-gray-500 border border-gray-800 px-2 py-1 rounded">06</span>
+                        <i class="fas fa-rocket text-cyan-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">Vision & Roadmap</h3>
+                    <ul class="text-gray-400 text-sm list-disc list-inside space-y-1 mb-4 flex-grow">
+                        <li>Planned features</li>
+                        <li>Community-driven evolution</li>
+                        <li>UX expansion goals</li>
+                    </ul>
+                    <div class="mt-auto text-cyan-500 text-sm font-medium flex items-center gap-2">
+                        See Future <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Documentation Philosophy -->
+        <section class="fade-in-section mb-24">
+            <h2 class="text-3xl font-bold mb-10 flex items-center gap-3">
+                <span class="bg-blue-600/20 p-2 rounded-lg text-blue-400"><i class="fas fa-brain"></i></span>
+                Documentation Philosophy
+            </h2>
+            <div class="glass-card p-8 rounded-xl relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-64 h-64 bg-purple-600/10 blur-[80px] rounded-full pointer-events-none"></div>
+                
+                <div class="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-gray-300 mb-6 text-lg">I believe documentation should:</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-chevron-right text-blue-500 text-sm"></i> Guide, not overwhelm</li>
+                            <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-chevron-right text-blue-500 text-sm"></i> Respect learners</li>
+                            <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-chevron-right text-blue-500 text-sm"></i> Stay transparent and honest</li>
+                            <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-chevron-right text-blue-500 text-sm"></i> Reflect the emotional side of building software</li>
+                            <li class="flex items-center gap-3 text-gray-400"><i class="fas fa-chevron-right text-blue-500 text-sm"></i> Support collaboration rather than control</li>
+                        </ul>
+                    </div>
+                    <div class="text-center md:text-right border-t md:border-t-0 md:border-l border-gray-800 pt-8 md:pt-0 md:pl-8">
+                        <i class="fas fa-hands-holding-circle text-5xl text-gray-600 mb-4 animate-float"></i>
+                        <p class="text-xl font-medium text-white italic">
+                            "Setbian documentation exists to help people feel included and informed — not lost."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- A Note to Readers -->
+        <footer class="fade-in-section glass-card rounded-2xl p-10 text-center relative overflow-hidden">
+             <!-- Footer Glow -->
+             <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
+
+            <i class="fas fa-heart text-3xl text-red-500 mb-6 animate-pulse-slow inline-block"></i>
+            <h2 class="text-2xl font-bold mb-4">A Note to Readers</h2>
+            <div class="max-w-2xl mx-auto text-gray-400 space-y-3">
+                <p>Thank you for taking the time to read this documentation.</p>
+                <p>
+                    Whether you are using Setbian, exploring the project, or thinking about contributing — your time and attention truly matter to me. I appreciate your presence here.
+                </p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. Dynamic Canvas Background (Consolidated for Documentation) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Slightly denser configuration for docs
+        const particleCount = 50; 
+        const connectionDistance = 160;
+        const mouseDistance = 220;
+
+        let mouse = { x: null, y: null };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4; 
+                this.vy = (Math.random() - 0.5) * 0.4; 
+                this.size = Math.random() * 2 + 0.5;
+                // Using a slightly more purple/slate tint for docs distinction
+                this.baseColor = 'rgba(124, 58, 237, '; 
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouseDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouseDistance - distance) / mouseDistance;
+                        const directionX = forceDirectionX * force * 0.5;
+                        const directionY = forceDirectionY * force * 0.5;
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.baseColor + '0.5)';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        let opacity = 1 - (distance / connectionDistance);
+                        // Purple/Blue mix for lines
+                        ctx.strokeStyle = 'rgba(139, 92, 246, ' + (opacity * 0.15) + ')'; 
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        resize();
+        initParticles();
+        animate();
+
+
+        // --- 2. Scroll Reveal Observer ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
