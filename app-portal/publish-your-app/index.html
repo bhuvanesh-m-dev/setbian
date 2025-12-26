@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian App Portal — Contribution Workflow</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        neutral: {
+                            850: '#1f1f1f',
+                            950: '#0a0a0a', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        /* Custom selection color */
+        ::selection {
+            background-color: rgba(16, 185, 129, 0.3);
+            color: #a7f3d0;
+        }
+
+        /* Animation Classes */
+        .fade-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 700ms ease-out, transform 700ms ease-out;
+        }
+
+        .fade-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glow Card Effect */
+        .glow-card {
+            background-color: #0a0a0a; /* neutral-950 */
+            border: 1px solid #171717; /* neutral-900 */
+        }
+        
+        .glow-card:hover {
+            border-color: #404040; /* neutral-700 */
+        }
+
+        .glow-overlay {
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .glow-card:hover .glow-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden antialiased" id="main-container">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-neutral-900">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-lg flex items-center justify-center">
+                    <span class="font-bold text-white font-sans">S</span>
+                </div>
+                <span class="font-semibold tracking-tight">Setbian</span>
+            </div>
+            <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" rel="noreferrer" class="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors">
+                <i data-lucide="github" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Star on GitHub</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+        <!-- Abstract Background Blobs -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] -z-10 opacity-50 animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[100px] -z-10"></div>
+
+        <div class="max-w-4xl mx-auto text-center fade-in-section">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-medium text-emerald-400 mb-6">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Open for Contributions
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-500">
+                Publish Your App.
+            </h1>
+            <p class="text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+                The Setbian App Portal follows a simple, transparent, and community-friendly publishing process. 
+                Build. Fork. Push. Setbian will handle the packaging for your App.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Workflow Section -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="fade-in-section mb-12">
+                <h2 class="text-3xl font-bold text-center">Contribution Workflow</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Step 1 -->
+                <div class="fade-in-section h-full" style="transition-delay: 0ms;">
+                    <div class="glow-card h-full p-6 rounded-2xl relative group transition-colors duration-300">
+                        <div class="glow-overlay absolute inset-0 pointer-events-none rounded-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-3 bg-neutral-900 rounded-lg border border-neutral-800 group-hover:border-emerald-500/30 transition-colors">
+                                    <i data-lucide="git-fork" class="w-6 h-6 text-purple-400"></i>
+                                </div>
+                                <span class="text-6xl font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors select-none">01</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Fork the Repository</h3>
+                            <div class="space-y-4">
+                                <p class="text-neutral-400 text-sm">Start by creating your own copy of the Setbian repository.</p>
+                                <div class="bg-neutral-900 border border-neutral-800 rounded-lg p-3 font-mono text-xs flex items-center justify-between group">
+                                    <span class="truncate text-blue-400">https://github.com/bhuvanesh-m-dev/setbian</span>
+                                    <button onclick="copyToClipboard('https://github.com/bhuvanesh-m-dev/setbian', this)" class="ml-2 p-1.5 rounded-md hover:bg-neutral-800 transition-colors text-neutral-400 hover:text-white" title="Copy">
+                                        <i data-lucide="copy" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <ul class="list-disc list-inside text-sm text-neutral-500 space-y-1 ml-1">
+                                    <li>Click <strong>Fork</strong> on GitHub</li>
+                                    <li>Clone the fork to your local system</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="fade-in-section h-full" style="transition-delay: 100ms;">
+                    <div class="glow-card h-full p-6 rounded-2xl relative group transition-colors duration-300">
+                        <div class="glow-overlay absolute inset-0 pointer-events-none rounded-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-3 bg-neutral-900 rounded-lg border border-neutral-800 group-hover:border-emerald-500/30 transition-colors">
+                                    <i data-lucide="folder-plus" class="w-6 h-6 text-emerald-400"></i>
+                                </div>
+                                <span class="text-6xl font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors select-none">02</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Add Your App Files</h3>
+                            <div class="space-y-4">
+                                <p class="text-neutral-400 text-sm">Organize your project structure cleanly.</p>
+                                <div class="bg-neutral-900 border border-neutral-800 rounded-lg p-4 font-mono text-xs relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent opacity-50"></div>
+                                    <p class="text-neutral-500 mb-2"># Directory Structure</p>
+                                    <div class="text-emerald-300">apps_code_files/</div>
+                                    <div class="pl-4 text-white">└── &lt;your-app-name&gt;/</div>
+                                    <div class="pl-8 text-neutral-400">├── source_files</div>
+                                    <div class="pl-8 text-neutral-400">├── README.md</div>
+                                    <div class="pl-8 text-neutral-400">└── LICENSE</div>
+                                </div>
+                                <p class="text-xs text-neutral-500">Ensure you include usage notes and license details.Also stunning Landing Page for your App</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="fade-in-section h-full" style="transition-delay: 200ms;">
+                    <div class="glow-card h-full p-6 rounded-2xl relative group transition-colors duration-300">
+                        <div class="glow-overlay absolute inset-0 pointer-events-none rounded-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-3 bg-neutral-900 rounded-lg border border-neutral-800 group-hover:border-emerald-500/30 transition-colors">
+                                    <i data-lucide="git-commit" class="w-6 h-6 text-blue-400"></i>
+                                </div>
+                                <span class="text-6xl font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors select-none">03</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Commit & Push</h3>
+                            <div class="space-y-4">
+                                <p class="text-neutral-400 text-sm">Save your changes and push them to your fork.</p>
+                                <div class="bg-neutral-900 border border-neutral-800 rounded-lg p-4 font-mono text-xs">
+                                    <p class="text-neutral-500"># Example Commit Message</p>
+                                    <p class="text-yellow-100">"Add my-awesome-app to apps_code_files"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="fade-in-section h-full" style="transition-delay: 300ms;">
+                    <div class="glow-card h-full p-6 rounded-2xl relative group transition-colors duration-300">
+                        <div class="glow-overlay absolute inset-0 pointer-events-none rounded-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-3 bg-neutral-900 rounded-lg border border-neutral-800 group-hover:border-emerald-500/30 transition-colors">
+                                    <i data-lucide="git-pull-request" class="w-6 h-6 text-orange-400"></i>
+                                </div>
+                                <span class="text-6xl font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors select-none">04</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Create Pull Request</h3>
+                            <div class="space-y-4">
+                                <p class="text-neutral-400 text-sm">Submit your contribution for review.</p>
+                                <div class="bg-neutral-900 border border-neutral-800 rounded-lg p-3 font-mono text-xs flex items-center justify-between">
+                                    <span class="truncate text-blue-400">.../setbian/pulls</span>
+                                    <a href="https://github.com/bhuvanesh-m-dev/setbian/pulls" target="_blank" rel="noreferrer" class="ml-2 p-1.5 rounded-md hover:bg-neutral-800 text-neutral-400 hover:text-white">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                                <div class="text-sm text-neutral-500 bg-neutral-900/50 p-3 rounded border border-neutral-800/50">
+                                    <strong class="text-neutral-300 block mb-1">Checklist:</strong>
+                                    • App Name & Description<br/>
+                                    • License Details<br/>
+                                    • Screenshots (Optional)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="fade-in-section h-full" style="transition-delay: 400ms;">
+                    <div class="glow-card h-full p-6 rounded-2xl relative group transition-colors duration-300">
+                        <div class="glow-overlay absolute inset-0 pointer-events-none rounded-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-3 bg-neutral-900 rounded-lg border border-neutral-800 group-hover:border-emerald-500/30 transition-colors">
+                                    <i data-lucide="package-check" class="w-6 h-6 text-pink-400"></i>
+                                </div>
+                                <span class="text-6xl font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors select-none">05</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3 text-white group-hover:text-emerald-400 transition-colors">Review & Publish</h3>
+                            <div class="space-y-4">
+                                <p class="text-neutral-400 text-sm">Setbian will convert your App code to <code class="text-pink-300">.deb</code>, and publish.</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs text-neutral-300">
+                                    <div class="bg-neutral-800/40 p-2 rounded text-center">Download Btn</div>
+                                    <div class="bg-neutral-800/40 p-2 rounded text-center">Info Page</div>
+                                    <div class="bg-neutral-800/40 p-2 rounded text-center">License Info</div>
+                                    <div class="bg-neutral-800/40 p-2 rounded text-center">Attribution</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy & Policy Grid -->
+    <section class="py-20 px-6 bg-neutral-950 border-y border-neutral-900">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <div class="fade-in-section">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="scale" class="text-yellow-400 w-6 h-6"></i>
+                        <h3 class="text-2xl font-bold">Publishing Policy</h3>
+                    </div>
+                    <div class="space-y-4 text-neutral-400">
+                        <div class="flex gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-1"></i>
+                            <p>Open-source apps must include license details.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-1"></i>
+                            <p>Proprietary apps are clearly disclosed.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-1"></i>
+                            <p>Setbian does not claim ownership of third-party software.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-1"></i>
+                            <p>The project acts solely as a discovery and packaging facilitator.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in-section" style="transition-delay: 200ms;">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="heart" class="text-red-400 w-6 h-6"></i>
+                        <h3 class="text-2xl font-bold">Why This Matters</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:bg-neutral-900 transition-colors">
+                            <h4 class="text-white font-medium mb-1">Traceable</h4>
+                            <p class="text-sm text-neutral-500">Keeps contributions open and trackable via Git.</p>
+                        </div>
+                        <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:bg-neutral-900 transition-colors">
+                            <h4 class="text-white font-medium mb-1">Collaboration</h4>
+                            <p class="text-sm text-neutral-500">Encourages improvements through Pull Requests.</p>
+                        </div>
+                        <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:bg-neutral-900 transition-colors">
+                            <h4 class="text-white font-medium mb-1">Accessibility</h4>
+                            <p class="text-sm text-neutral-500">Makes .deb packaging accessible to all.</p>
+                        </div>
+                        <div class="bg-neutral-900/50 p-4 rounded-lg border border-neutral-800 hover:bg-neutral-900 transition-colors">
+                            <h4 class="text-white font-medium mb-1">Community</h4>
+                            <p class="text-sm text-neutral-500">Builds an ecosystem driven by people.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/20 to-transparent pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 fade-in-section">
+            <div class="w-16 h-16 bg-neutral-900 rounded-2xl mx-auto flex items-center justify-center mb-8 border border-neutral-800 shadow-2xl shadow-emerald-900/20">
+                <i data-lucide="code-2" class="w-8 h-8 text-white"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Have an <span class="text-emerald-400">Awesome App?</span>
+            </h2>
+            <p class="text-xl text-neutral-400 mb-10 max-w-2xl mx-auto">
+                If you believe your app can help someone in the Linux community, I welcome you to publish it through Setbian. 
+                Fork the repo, add your work, and submit your PR — let’s build something meaningful together.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/pulls" target="_blank" rel="noreferrer" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg shadow-emerald-900/50 flex items-center justify-center gap-2">
+                    <i data-lucide="git-pull-request" class="w-5 h-5"></i>
+                    Submit Pull Request
+                </a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" rel="noreferrer" class="px-8 py-3 bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                    View Repository
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-neutral-900 bg-black">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <h4 class="font-bold text-white mb-1">Setbian Portal</h4>
+                <p class="text-xs text-neutral-500">More than just software — sharing work with purpose.</p>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" class="text-neutral-500 hover:text-white transition-colors">Repository</a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/tree/main/apps_code_files" class="text-neutral-500 hover:text-white transition-colors">Contribution Folder</a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian/pulls" class="text-neutral-500 hover:text-white transition-colors">Pull Requests</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // 1. Intersection Observer for Fade-in Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('fade-hidden');
+                        entry.target.classList.add('fade-visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => {
+                el.classList.add('fade-hidden'); // Ensure initial state is hidden
+                observer.observe(el);
+            });
+        });
+
+        // 2. Mouse Glow Effect
+        const container = document.getElementById("main-container");
+        container.addEventListener("mousemove", (e) => {
+            const cards = document.querySelectorAll(".glow-card");
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            });
+        });
+
+        // 3. Copy to Clipboard Functionality
+        function copyToClipboard(text, btnElement) {
+            // Fallback for copying
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                
+                // Visual feedback
+                const icon = btnElement.querySelector('i');
+                const originalIconName = icon.getAttribute('data-lucide');
+                
+                // Switch to checkmark
+                icon.setAttribute('data-lucide', 'check-circle-2');
+                icon.classList.add('text-emerald-500');
+                lucide.createIcons(); // Refresh icons to render the new one
+
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    icon.setAttribute('data-lucide', 'copy'); // Assuming original was copy
+                    icon.classList.remove('text-emerald-500');
+                    lucide.createIcons();
+                }, 2000);
+
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
