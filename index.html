@@ -1,306 +1,667 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Setbian - GUI Debian Post-Install Setup Tool</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="font-sans antialiased text-gray-800 bg-gray-50">
-  <!-- Navigation Bar -->
-  <nav class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <div class="flex-shrink-0 flex items-center">
-            <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
-            <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" rel="noopener noreferrer" class="ml-2 text-xl font-bold text-gray-900">
-              Setbian
-            </a>
-          </div>
-        </div>
-        <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
-          <a href="#features" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">Features</a>
-          <a href="#how-it-works" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">How It Works</a>
-          <a href="#install" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">Installation</a>
-          <div class="nav-social">
-            <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.749 0 .267.18.577.688.479C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg></a>
-            <a href="https://linkedin.com/in/bhuvaneshm-developer" target="_blank" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.845-1.563 3.043 0 3.604 2.004 3.604 4.609v5.587z"/></svg></a>
-            <a href="https://twitter.com/bhuvaneshm06" target="_blank" aria-label="Twitter"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 01-2.828.775 4.932 4.932 0 002.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 00-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.855 2.01-.855 3.17 0 2.188 1.115 4.117 2.823 5.247a4.904 4.904 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 01-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.209c9.057 0 14.009-7.496 14.009-13.986 0-.213-.005-.425-.014-.636A9.936 9.936 0 0024 4.557z"/></svg></a>
-          </div>
-        </div>
-        <div class="-mr-2 flex items-center sm:hidden">
-          <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600">
-            <span class="sr-only">Open main menu</span>
-            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-gray-200">
-      <div class="pt-2 pb-3 space-y-1">
-        <a href="#features" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Features</a>
-        <a href="#how-it-works" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">How It Works</a>
-        <a href="#install" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Installation</a>
-        <a href="https://github.com/bhuvanesh-m-dev" target="_blank" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">GitHub</a>
-        <a href="https://linkedin.com/in/bhuvaneshm-developer" target="_blank" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">LinkedIn</a>
-        <a href="https://twitter.com/bhuvaneshm06" target="_blank" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Twitter</a>
-      </div>
-    </div>
-  </nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian - Make Linux Meaningful</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Hero Section -->
-  <div class="hero-gradient">
-    <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">Simplify Your Debian Setup</h1>
-        <p class="mt-6 max-w-lg mx-auto text-xl text-indigo-100">Setbian is a GUI-based Debian post-install setup tool that saves you time and hassle.</p>
-        <div class="mt-10 flex justify-center space-x-4">
-          <a href="#install" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-50">Get Started</a>
-          <a href="#features" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-900 hover:bg-indigo-600">Learn More</a>
-        </div><br>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Config for Tailwind Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'debian-red': '#F54276',
+                        'bg-dark': '#050505',
+                        'bg-card': '#111',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #d1d5db;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background-color: #F54276;
+            color: white;
+        }
+
+        /* Ambient Glow Animations */
+        @keyframes blob-pulse {
+            0% { transform: scale(1); opacity: 0.08; }
+            50% { transform: scale(1.1); opacity: 0.12; }
+            100% { transform: scale(1); opacity: 0.08; }
+        }
+
+        .blob-animate {
+            animation: blob-pulse 8s infinite ease-in-out;
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays for grids */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F54276;
+        }
+
+        /* Glassmorphism for Scroll Button */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-btn:hover {
+            background: rgba(245, 66, 118, 0.2);
+            border-color: rgba(245, 66, 118, 0.4);
+        }
         
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
-  
-  <!-- The YouTube Iframe is positioned absolutely within the container to fill it. -->
-  <iframe 
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-      src="https://www.youtube.com/embed/xyKAwq2ITIU" 
-      title="YouTube video player" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-  </iframe>
-</div>
+        /* New Glossy Button Style for Navigation */
+        .glossy-nav-btn {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
+        }
+        .glossy-nav-btn:hover {
+            background: rgba(245, 66, 118, 0.15);
+            border-color: rgba(245, 66, 118, 0.4);
+            box-shadow: 0 0 20px rgba(245, 66, 118, 0.2), inset 0 0 10px rgba(245, 66, 118, 0.1);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden font-sans">
 
-      </div>
+    <!-- Background Ambient Glow -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-debian-red rounded-full mix-blend-screen filter blur-[120px] blob-animate"></div>
+        <div class="absolute bottom-[10%] right-[-5%] w-[30vw] h-[30vw] bg-purple-900 rounded-full mix-blend-screen filter blur-[100px] opacity-[0.1]"></div>
     </div>
-  </div>
 
-  <!-- Features Section -->
-  <section id="features" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
-        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Features</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Why Choose Setbian?</p>
-        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">Designed to make your Debian experience seamless from the start.</p>
-      </div>
-      <div class="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <!-- New Feature Box: Install Essentials with Internet Only -->
-        <div class="feature-card transition-all duration-300 ease-in-out pt-6">
-          <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
-            <div class="-mt-6">
-              <span class="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-md shadow-lg">
-                <!-- Globe Icon Only -->
-                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/>
-                  <path d="M2.5 12h19M12 2.5c2.5 2.5 2.5 16.5 0 19M12 2.5c-2.5 2.5-2.5 16.5 0 19" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-              </span>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight">Install Essentials with Internet Only</h3>
-              <p class="mt-5 text-base text-gray-500">With just an internet connection, you can install all your essential apps using Setbian with a single terminal command.</p>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="text-2xl font-bold text-white flex items-center gap-2 reveal active">
+                <span class="bg-gradient-to-r from-debian-red to-purple-600 text-transparent bg-clip-text">Setbian</span>
             </div>
-          </div>
-        </div>
-        <div class="feature-card transition-all duration-300 ease-in-out pt-6">
-          <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
-            <div class="-mt-6">
-              <span class="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-md shadow-lg">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
-              </span>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight">Quick Application Installation</h3>
-              <p class="mt-5 text-base text-gray-500">Install all your essential applications in one go, without manually searching for each package.</p>
-            </div>
-          </div>
-        </div>
-        <div class="feature-card transition-all duration-300 ease-in-out pt-6">
-          <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
-            <div class="-mt-6">
-              <span class="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-md shadow-lg">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              </span>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight">Time-Saving Automation</h3>
-              <p class="mt-5 text-base text-gray-500">Automate the tedious post-installation process and get your system ready faster.</p>
-            </div>
-          </div>
-        </div>
-        <div class="feature-card transition-all duration-300 ease-in-out pt-6">
-          <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
-            <div class="-mt-6">
-              <span class="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-md shadow-lg">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-              </span>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight">Native Python Build</h3>
-              <p class="mt-5 text-base text-gray-500">Built with Python using preinstalled libraries for maximum compatibility and minimal dependencies.</p>
-            </div>
-          </div>
-        </div>
-        <div class="feature-card transition-all duration-300 ease-in-out pt-6">
-          <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8 h-full">
-            <div class="-mt-6">
-              <span class="inline-flex items-center justify-center p-3 bg-indigo-600 rounded-md shadow-lg">
-                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-              </span>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight">User-Friendly Interface</h3>
-              <p class="mt-5 text-base text-gray-500">Simple GUI that makes system setup accessible to users of all experience levels.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
-        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">How It Works</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Setbian in 3 Simple Terminal Steps</p>
-        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">Get Setbian up and running with just your terminal and an internet connection.</p>
-      </div>
-      <div class="mt-16 lg:grid lg:grid-cols-3 lg:gap-8">
-        <!-- Step 1 -->
-        <div class="relative">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4z"/></svg>
-          </div>
-          <h3 class="mt-6 text-lg font-medium text-gray-900">1. Download Setbian Package</h3>
-          <p class="mt-2 text-base text-gray-500">Run the official terminal command to instantly download the Setbian package from the internet.</p>
-        </div>
-        <!-- Step 2 -->
-        <div class="mt-10 lg:mt-0 relative">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <h3 class="mt-6 text-lg font-medium text-gray-900">2. Install Setbian Automatically</h3>
-          <p class="mt-2 text-base text-gray-500">The official Terminal command will automatically install Setbian on your system—no manual steps required.</p>
-        </div>
-        <!-- Step 3 -->
-        <div class="mt-10 lg:mt-0 relative">
-          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8M12 8v8"/></svg>
-          </div>
-          <h3 class="mt-6 text-lg font-medium text-gray-900">3. Launch & Use Setbian Instantly</h3>
-          <p class="mt-2 text-base text-gray-500">Setbian will launch automatically when installation finished. The GUI will open, letting you install all your essential apps with just an internet connection—no extra steps!</p>
-        </div>
-      </div>
-    </div>
-  </section>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#portal" class="hover:text-debian-red transition-colors">App Portal</a>
+                <a href="#philosophy" class="hover:text-debian-red transition-colors">Philosophy</a>
+                <a href="#contribute" class="hover:text-debian-red transition-colors">Contribute</a>
+                
+                <!-- Publish Your App Button (Glossy) -->
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app" target="_blank" rel="noreferrer"
+                   class="glossy-nav-btn flex items-center gap-2 px-5 py-2 rounded-full text-white group">
+                    <i data-lucide="upload-cloud" class="w-4 h-4 text-debian-red group-hover:text-white transition-colors"></i>
+                    <span>Publish Your App</span>
+                </a>
 
-  <!-- Installation Section -->
-  <section id="install" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
-        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Installation</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Get Started with Setbian</p>
-      </div>
-      <div class="mt-16 max-w-3xl mx-auto space-y-10">
-        <div class="text-center mt-10">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">Official Terminal Command</h3>
-          <div class="relative inline-block w-full max-w-full">
-            <pre class="text-sm text-gray-800 bg-gray-100 p-4 rounded-md overflow-x-auto text-left select-all" id="setbianInstallCode"><code class="language-bash">wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb && \
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" rel="noreferrer"
+                   class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-white transition-all border border-white/5">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0a0a0a] border-b border-white/10 overflow-hidden transition-all duration-300">
+            <div class="flex flex-col p-6 gap-4">
+                <a href="#portal" class="block text-lg hover:text-debian-red">App Portal</a>
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app" target="_blank" class="block text-lg text-debian-red font-semibold">Publish Your App</a>
+                <a href="#contribute" class="block text-lg hover:text-debian-red">Contribute</a>
+                <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="flex items-center gap-2 text-gray-300 hover:text-white">
+                    <i data-lucide="github" class="w-4 h-4"></i> Visit GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+        <!-- Badges -->
+        <div class="reveal flex flex-wrap justify-center gap-3 mb-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-semibold tracking-wider uppercase">
+                <i data-lucide="package" class="w-3 h-3"></i>
+                <span>Installer v0.0.5</span>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-debian-red/10 border border-debian-red/20 text-debian-red text-xs font-semibold tracking-wider uppercase">
+                <i data-lucide="globe" class="w-3 h-3"></i>
+                <span>App Portal v1.0.0</span>
+            </div>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="reveal delay-100 text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+            Make Linux <span class="text-transparent bg-clip-text bg-gradient-to-r from-debian-red to-purple-500">Meaningful</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="reveal delay-200 text-lg md:text-xl text-gray-400 max-w-2xl mb-10">
+            A lightweight, user-friendly GUI setup assistant for Debian. 
+            Configure your system and install essential software instantly after a fresh install.
+        </p>
+
+        <!-- CTAs -->
+        <div class="reveal delay-300 flex flex-col sm:flex-row gap-4">
+            <!-- Updated Get Started Button -->
+            <a href="#install" 
+               class="group flex items-center justify-center gap-2 bg-debian-red hover:bg-[#d93462] text-white px-8 py-3.5 rounded-lg font-medium transition-all shadow-lg shadow-debian-red/25">
+                <i data-lucide="play" class="w-5 h-5"></i>
+                <span>Get Started</span>
+                <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+            </a>
+            <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" 
+               class="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-3.5 rounded-lg font-medium transition-all backdrop-blur-sm">
+                <i data-lucide="globe" class="w-5 h-5"></i>
+                <span>Explore App Portal</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Video Embed Section -->
+    <section class="px-6 max-w-5xl mx-auto mb-20">
+        <div class="reveal relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-debian-red/10 bg-[#0a0a0a]">
+            <!-- Window Bar -->
+            <div class="h-8 bg-[#111] flex items-center px-4 gap-2 border-b border-white/5">
+                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                <div class="ml-4 text-xs text-gray-500 font-mono">setbian-demo --video</div>
+            </div>
+            
+            <div class="aspect-video w-full">
+                <iframe 
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/xyKAwq2ITIU" 
+                    title="Setbian Demo Video"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section (New) -->
+    <section id="install" class="py-24 px-6 relative bg-gradient-to-b from-[#0a0a0a] to-[#0f0f0f] border-y border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Install <span class="text-debian-red">Setbian</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Get up and running in seconds. Use the terminal command below or download the .deb package manually.</p>
+            </div>
+
+            <!-- Grid Container with 3 columns on Desktop (1fr auto 1fr) -->
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 lg:gap-8 items-stretch">
+                
+                <!-- 1. Terminal Command Box -->
+                <div class="reveal delay-100 bg-[#050505] rounded-xl border border-white/10 overflow-hidden shadow-2xl flex flex-col h-full">
+                    <div class="flex items-center justify-between px-4 py-3 bg-[#111] border-b border-white/5 shrink-0">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">Terminal</span>
+                        <button onclick="copyToClipboard()" class="text-gray-400 hover:text-white transition-colors" title="Copy Command">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 relative flex-grow flex items-center">
+                        <pre class="font-mono text-sm text-gray-300 whitespace-pre-wrap break-all leading-relaxed w-full" id="installCmd">wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb && \
 sudo dpkg -i setbian.deb || (sudo apt --fix-broken install -y && sudo dpkg -i setbian.deb) && \
-setbian
-</code></pre>
-            <button id="copyInstallCodeBtn" class="absolute top-2 right-2 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-xs" title="Copy to clipboard">Copy</button>
-          </div>
-          <p class="mt-4 text-base text-gray-500">Copy and paste this command in your terminal to download, install, and launch Setbian automatically.</p>
-          <div class="flex items-center justify-center my-4">
-            <span class="block h-px bg-gray-300 flex-1"></span>
-            <span class="mx-4 text-gray-500 font-semibold text-sm tracking-widest">OR</span>
-            <span class="block h-px bg-gray-300 flex-1"></span>
-          </div>
-          <div class="mt-8">
-            <div id="downloadBtn">
-              <span id="downloadIcon">&#x2B07;</span> Download .deb
-            </div>
-            <div id="thankYouMessage" class="thankyou-standalone-message" style="display:none;">Thank you for downloading Setbian for Debian!</div>
-            <!-- Standalone Thank You + Steps for retrieval -->
-            <div id="thankYouStandalone" style="display:none;">
-              <div class="thankyou-standalone-container">
-                <div class="thankyou-standalone-message">Thank you for downloading Setbian for Debian!</div>
-                <div class="thankyou-standalone-steps mt-2 space-y-4 text-left max-w-xl mx-auto">
-                  <div>
-                    <span class="block text-xs text-gray-500 mb-1">1. Go to your Downloads folder</span>
-                    <div class="relative">
-                      <pre class="bg-gray-100 rounded p-2 text-sm text-gray-800 select-all"><code id="step1-cmd">cd ~/Downloads</code></pre>
-                      <button class="copyStepBtn absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 transition text-xs" data-cmd="step1-cmd">Copy</button>
+setbian</pre>
+                        
+                        <!-- Success Message Toast -->
+                        <div id="copySuccess" class="absolute top-4 right-4 bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded text-xs font-medium opacity-0 transition-opacity">
+                            Copied!
+                        </div>
                     </div>
-                  </div>
-                  <div>
-                    <span class="block text-xs text-gray-500 mb-1">2. Install the downloaded .deb package</span>
-                    <div class="relative">
-                      <pre class="bg-gray-100 rounded p-2 text-sm text-gray-800 select-all"><code id="step2-cmd">sudo dpkg -i setbian-0.0.5.deb</code></pre>
-                      <button class="copyStepBtn absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 transition text-xs" data-cmd="step2-cmd">Copy</button>
-                    </div>
-                  </div>
-                  <div>
-                    <span class="block text-xs text-gray-500 mb-1">3. Launch Setbian</span>
-                    <div class="relative">
-                      <pre class="bg-gray-100 rounded p-2 text-sm text-gray-800 select-all"><code id="step3-cmd">setbian</code></pre>
-                      <button class="copyStepBtn absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 transition text-xs" data-cmd="step3-cmd">Copy</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+
+                <!-- 2. Stunning OR Divider -->
+                <div class="reveal delay-150 flex lg:flex-col items-center justify-center gap-4 py-2 lg:py-0">
+                    <!-- Line 1: Horizontal on Mobile, Vertical on Desktop -->
+                    <div class="h-px w-full lg:w-px lg:h-full bg-gradient-to-r lg:bg-gradient-to-b from-transparent via-white/10 to-transparent flex-1"></div>
+                    
+                    <!-- OR Badge -->
+                    <div class="relative shrink-0 group">
+                        <!-- Glow Effect -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-debian-red to-purple-600 rounded-full blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+                        
+                        <!-- Badge Content -->
+                        <div class="relative w-12 h-12 rounded-full bg-[#0a0a0a] border border-white/10 flex items-center justify-center z-10 shadow-xl">
+                            <span class="text-sm font-black italic text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 font-serif tracking-wide group-hover:scale-110 transition-transform duration-300">OR</span>
+                        </div>
+                    </div>
+
+                    <!-- Line 2 -->
+                    <div class="h-px w-full lg:w-px lg:h-full bg-gradient-to-r lg:bg-gradient-to-b from-transparent via-white/10 to-transparent flex-1"></div>
+                </div>
+
+                <!-- 3. Manual Download Card -->
+                <div class="reveal delay-200 bg-bg-card p-8 rounded-xl border border-white/5 hover:border-debian-red/30 transition-all flex flex-col justify-center h-full shadow-lg hover:shadow-debian-red/5">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-debian-red/10 rounded-lg flex items-center justify-center mb-4 text-debian-red ring-1 ring-debian-red/20">
+                            <i data-lucide="package" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Download .deb Package</h3>
+                        <p class="text-gray-500 text-sm mb-6">
+                            Prefer a manual install? Download the latest Debian package directly from Setbian's GitHub releases.
+                        </p>
+                    </div>
+                    <a href="https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb" 
+                       class="w-full flex items-center justify-center gap-2 bg-white text-black font-bold py-4 rounded-lg hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        Download v0.0.5
+                    </a>
+                    <p class="text-center text-xs text-gray-600 mt-4 flex items-center justify-center gap-1">
+                        <i data-lucide="shield-check" class="w-3 h-3"></i>
+                        <span>MD5/SHA Checksums available on GitHub</span>
+                    </p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="mt-4">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-      <div class="mb-2 md:mb-0">
-        &copy; 2025 Setbian. All rights reserved.
-      </div>
-      <div class="nav-social">
-        <a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.749 0 .267.18.577.688.479C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg></a>
-        <a href="https://linkedin.com/in/bhuvaneshm-developer" target="_blank" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.845-1.563 3.043 0 3.604 2.004 3.604 4.609v5.587z"/></svg></a>
-        <a href="https://twitter.com/bhuvaneshm06" target="_blank" aria-label="Twitter"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 01-2.828.775 4.932 4.932 0 002.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 00-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.855 2.01-.855 3.17 0 2.188 1.115 4.117 2.823 5.247a4.904 4.904 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 01-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.209c9.057 0 14.009-7.496 14.009-13.986 0-.213-.005-.425-.014-.636A9.936 9.936 0 0024 4.557z"/></svg></a>
-      </div>
-    </div>
-  </footer>
+    <!-- Features Grid (Why Choose Setbian) -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose <span class="text-debian-red">Setbian</span>?</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Designed to make post-installation configuration effortless while respecting the Debian philosophy.</p>
+            </div>
 
-  <script src="script.js"></script>
-  <script>
-    // Copy to clipboard for Setbian install code
-    document.addEventListener('DOMContentLoaded', function() {
-      var copyBtn = document.getElementById('copyInstallCodeBtn');
-      var codeBlock = document.getElementById('setbianInstallCode');
-      if (copyBtn && codeBlock) {
-        copyBtn.addEventListener('click', function() {
-          var text = codeBlock.innerText;
-          navigator.clipboard.writeText(text).then(function() {
-            copyBtn.textContent = 'Copied';
-            setTimeout(function() { copyBtn.textContent = 'Copy'; }, 5000);
-          });
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="reveal delay-100 bg-bg-card p-8 rounded-2xl border border-white/5 hover:border-debian-red/30 transition-all hover:shadow-lg hover:shadow-debian-red/10 hover:-translate-y-1 group">
+                    <div class="mb-6 p-3 bg-white/5 rounded-xl w-fit group-hover:bg-debian-red/10 transition-colors">
+                        <i data-lucide="layers" class="text-debian-red w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Intuitive Interface</h3>
+                    <p class="text-gray-500 leading-relaxed">A clean graphical interface that makes post-install configuration easy for new Debian users without touching the terminal.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="reveal delay-200 bg-bg-card p-8 rounded-2xl border border-white/5 hover:border-blue-400/30 transition-all hover:shadow-lg hover:shadow-blue-400/10 hover:-translate-y-1 group">
+                    <div class="mb-6 p-3 bg-white/5 rounded-xl w-fit group-hover:bg-blue-400/10 transition-colors">
+                        <i data-lucide="cpu" class="text-blue-400 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Native Python</h3>
+                    <p class="text-gray-500 leading-relaxed">Built using preinstalled libraries. No complex dependency chains. It runs straight out-of-the-box on a fresh system.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="reveal delay-300 bg-bg-card p-8 rounded-2xl border border-white/5 hover:border-yellow-400/30 transition-all hover:shadow-lg hover:shadow-yellow-400/10 hover:-translate-y-1 group">
+                    <div class="mb-6 p-3 bg-white/5 rounded-xl w-fit group-hover:bg-yellow-400/10 transition-colors">
+                        <i data-lucide="zap" class="text-yellow-400 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Lightweight & Fast</h3>
+                    <p class="text-gray-500 leading-relaxed">Focused on usability and minimal footprint. Select and install essential packages instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Portal Section -->
+    <section id="portal" class="py-24 px-6 relative overflow-hidden bg-[#0a0a0a]/50 border-t border-white/5">
+        <div class="absolute top-1/2 right-0 w-[300px] h-[300px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <div class="inline-block px-3 py-1 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase mb-4">
+                    Community Driven
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    The Setbian <br/>
+                    <span class="text-blue-500">App Portal</span>
+                </h2>
+                <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                    A centralized hub to discover and install apps. Developers believe in transparent app listings with clear descriptions, open licensing details, and easy installation instructions.
+                </p>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex gap-4">
+                        <div class="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="text-white font-semibold">Discover Apps</h4>
+                            <p class="text-sm text-gray-500">Explore tools like PyLlamaUI and other community submissions.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="text-white font-semibold">Transparent Listings</h4>
+                            <p class="text-sm text-gray-500">Know exactly what you are installing. Clear licenses and metadata.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="text-white font-semibold">One-Click Install</h4>
+                            <p class="text-sm text-gray-500">Direct .deb downloads or Setbian integration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank"
+                   class="inline-flex items-center gap-2 text-white border-b border-debian-red pb-1 hover:text-debian-red transition-colors">
+                    Visit the App Portal <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Portal Abstract Visual -->
+            <div class="reveal delay-200 grid grid-cols-2 gap-4">
+                <div class="space-y-4 mt-8">
+                    <div class="bg-bg-card p-6 rounded-xl border border-white/5 shadow-xl">
+                        <i data-lucide="terminal" class="text-debian-red mb-4 w-8 h-8"></i>
+                        <h3 class="text-white font-semibold">PyLlamaUI</h3>
+                        <p class="text-xs text-gray-500 mt-2">Engineered for performance, privacy, and a great developer experience.</p>
+                    </div>
+                    <div class="bg-bg-card p-6 rounded-xl border border-white/5 shadow-xl">
+                        <i data-lucide="code" class="text-green-400 mb-4 w-8 h-8"></i>
+                        <h3 class="text-white font-semibold">Dev Tools</h3>
+                        <p class="text-xs text-gray-500 mt-2">Essential setup for programmers.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-bg-card p-6 rounded-xl border border-white/5 shadow-xl">
+                        <i data-lucide="book-open" class="text-purple-400 mb-4 w-8 h-8"></i>
+                        <h3 class="text-white font-semibold">Documentation</h3>
+                        <p class="text-xs text-gray-500 mt-2">Learn how to configure your system.</p>
+                    </div>
+                    <div class="bg-bg-card p-6 rounded-xl border border-white/5 shadow-xl">
+                        <i data-lucide="message-circle" class="text-blue-400 mb-4 w-8 h-8"></i>
+                        <h3 class="text-white font-semibold">Community</h3>
+                        <p class="text-xs text-gray-500 mt-2">Reddit, X, and GitHub discussions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#050505] border-y border-white/5">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal">
+            <div class="flex justify-center mb-6">
+                <i data-lucide="heart" class="text-debian-red w-12 h-12"></i>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Human-Centered Linux</h2>
+            <p class="text-xl text-gray-300 leading-relaxed italic mb-12">
+                "Setbian is not just about installing applications — it is about making Linux more approachable, collaborative, and emotionally meaningful."
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div>
+                    <h4 class="text-white font-bold mb-2">Collaborative</h4>
+                    <p class="text-sm text-gray-500">Encourages community contributions. Software becomes meaningful when people build it together.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-2">Transparent</h4>
+                    <p class="text-sm text-gray-500">Fully open source with clear licensing. We respect original developers and ethical publishing.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-2">Inclusive</h4>
+                    <p class="text-sm text-gray-500">Designed for both beginners taking their first steps and advanced users needing speed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section id="contribute" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="reveal bg-bg-card rounded-3xl p-8 md:p-16 border border-white/5 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-debian-red/5 rounded-full blur-[80px] pointer-events-none"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+                    <div class="max-w-xl">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Start Contributing</h2>
+                        <p class="text-gray-400 mb-8">
+                            You can help Setbian in many ways: Code, Bug Reports, UX Feedback, or Documentation.
+                            Join the ecosystem and help us make Linux better for everyone.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://github.com/bhuvanesh-m-dev/setbian/fork" target="_blank" class="px-6 py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors">
+                                Fork Repository
+                            </a>
+                            <a href="https://github.com/bhuvanesh-m-dev/setbian/issues" target="_blank" class="px-6 py-3 bg-transparent border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-colors">
+                                Report Issue
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-auto bg-[#050505] p-6 rounded-xl border border-white/10 font-mono text-sm text-gray-400 shadow-2xl">
+                        <div class="flex gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="space-y-2">
+                            <p><span class="text-debian-red">git</span> clone https://github.com/bhuvanesh-m-dev/setbian</p>
+                            <p><span class="text-debian-red">cd</span> setbian</p>
+                            <p class="text-gray-600"># Make your changes...</p>
+                            <p><span class="text-debian-red">git</span> commit -m "Add cool feature"</p>
+                            <p><span class="text-debian-red">git</span> push origin feature-branch</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#050505] pt-16 pb-8 border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1">
+                    <span class="text-2xl font-bold text-white mb-4 block">Setbian</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Together, we’ll make this year count for Linux — through learning, sharing, and contribution.
+Setbian turns setup into a meaningful part of the journey.
+                    </p>
+                </div>
+                
+                <!-- Ecosystem Links -->
+                <div>
+                    <h5 class="text-white font-bold mb-4">Ecosystem</h5>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" class="hover:text-debian-red transition-colors">App Portal</a></li>
+                        <li><a href="https://github.com/bhuvanesh-m-dev/setbian" target="_blank" class="hover:text-debian-red transition-colors">Installer</a></li>
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/about" target="_blank" class="hover:text-debian-red transition-colors">About Setbian</a></li>
+                        <li>
+                            <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/vision-and-roadmap" target="_blank" class="flex items-center gap-2 group">
+                                <span class="group-hover:text-debian-red transition-colors font-medium text-gray-300">Vision & Roadmap</span>
+                                <i data-lucide="sparkles" class="w-3 h-3 text-debian-red"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Links -->
+                <div>
+                    <h5 class="text-white font-bold mb-4">Resources</h5>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/documentation" target="_blank" class="hover:text-debian-red transition-colors">Documentation</a></li>
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/updates-and-releases" target="_blank" class="hover:text-debian-red transition-colors">Updates & Releases</a></li>
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/press-and-announcements" target="_blank" class="hover:text-debian-red transition-colors">Press & Announcements</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Community Links -->
+                <div>
+                    <h5 class="text-white font-bold mb-4">Community</h5>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li>
+                            <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app" target="_blank" class="flex items-center gap-2 group">
+                                <span class="group-hover:text-debian-red transition-colors font-medium text-debian-red">Publish Your App</span>
+                                <i data-lucide="arrow-up-right" class="w-3 h-3 text-debian-red"></i>
+                            </a>
+                        </li>
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/contribute" target="_blank" class="hover:text-debian-red transition-colors">Contribute</a></li>
+                        <li><a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/discussions" target="_blank" class="hover:text-debian-red transition-colors">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+                <p> &copy; 2025 - Present Bhuvanesh M. Open Source under MIT License.</p>
+                <div class="flex items-center gap-2">
+                    <span>Made with</span>
+                    <i data-lucide="heart" class="text-debian-red w-3 h-3 fill-debian-red"></i>
+                    <span>for Debian Users</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollTopBtn" class="fixed bottom-6 right-6 p-3 rounded-full text-white glass-btn transition-all duration-300 opacity-0 translate-y-10 focus:outline-none hover:shadow-lg hover:shadow-debian-red/20 z-50 pointer-events-none">
+            <i data-lucide="arrow-up" class="w-5 h-5"></i>
+        </button>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-[#050505]/90', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-4');
+                navbar.classList.remove('bg-transparent', 'py-6');
+            } else {
+                navbar.classList.remove('bg-[#050505]/90', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-4');
+                navbar.classList.add('bg-transparent', 'py-6');
+            }
         });
-      }
 
-      // Copy to clipboard for step commands
-      var stepCopyBtns = document.querySelectorAll('.copyStepBtn');
-      stepCopyBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          var cmdId = btn.getAttribute('data-cmd');
-          var cmdText = document.getElementById(cmdId).innerText;
-          navigator.clipboard.writeText(cmdText).then(function() {
-            btn.textContent = 'Copied';
-            setTimeout(function() { btn.textContent = 'Copy'; }, 5000);
-          });
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons(); 
         });
-      });
-    });
-  </script>
-</body>
-<!-- Up Arrow Button -->
-<button id="upArrowBtn" title="Back to top" aria-label="Back to top">
-  &#8593;
-</button>
-</html>
+
+        // Scroll Animation (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Scroll to Top Logic
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                scrollTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                scrollTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Copy to Clipboard Logic
+        function copyToClipboard() {
+            const cmdText = document.getElementById('installCmd').innerText;
+            navigator.clipboard.writeText(cmdText).then(() => {
+                const toast = document.getElementById('copySuccess');
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
