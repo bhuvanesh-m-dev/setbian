@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#050505',
+                            card: '#0a0a0a',
+                            accent: '#3b82f6', // Blue
+                            purple: '#8b5cf6',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Canvas Background */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(30, 30, 30, 0.8);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hashtag-container {
+            background: linear-gradient(45deg, #1a1a1a, #000);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hashtag-container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Interactive Background -->
+    <canvas id="network-canvas"></canvas>
+
+    <!-- Navigation / Header -->
+    <header class="fixed w-full z-50 top-0 left-0 border-b border-white/5 bg-black/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                Setbian<span class="text-gray-500 font-light">Community</span>
+            </div>
+            <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" class="hidden md:block text-sm text-gray-400 hover:text-white transition-colors">
+                Visit App Portal <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="flex-grow pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                Decentralized Discussion
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
+                A Space for <span class="gradient-text">Conversation</span>
+            </h1>
+            <p class="text-xl text-gray-400 leading-relaxed mb-12 max-w-2xl mx-auto">
+                Setbian is more than software. It's a growing space for collaboration, learning, and sharing ideas. We don't limit discussion to one platform. Talk openly, anywhere.
+            </p>
+
+            <!-- Hashtag Section -->
+            <div class="relative group inline-block cursor-pointer" onclick="copyHashtag()">
+                <div class="hashtag-container rounded-2xl px-8 py-6 md:px-12 md:py-8 flex items-center gap-4 transition-transform group-hover:scale-105">
+                    <span class="text-4xl md:text-6xl font-black text-white tracking-wider">#Setbian</span>
+                    <i class="fas fa-copy text-2xl text-gray-500 group-hover:text-white transition-colors"></i>
+                </div>
+                <div id="copy-feedback" class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-sm text-green-400 opacity-0 transition-opacity">
+                    Copied to clipboard!
+                </div>
+            </div>
+            <p class="mt-6 text-gray-500 text-sm">Click to copy & use on any platform</p>
+        </div>
+
+        <!-- Platforms Grid -->
+        <div class="max-w-6xl mx-auto mt-32">
+            <h2 class="text-3xl font-bold mb-2 text-center reveal">Where You Can Discuss</h2>
+            <p class="text-gray-400 text-center mb-12 reveal">Connect across the internet using the hashtag.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-xl reveal">
+                    <div class="w-12 h-12 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 text-orange-500">
+                        <i class="fab fa-reddit-alien text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Reddit</h3>
+                    <p class="text-gray-400 text-sm">Start threads, share memes, or ask deep technical questions.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-xl reveal" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 rounded-full bg-blue-400/10 flex items-center justify-center mb-4 text-blue-400">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">X (Twitter)</h3>
+                    <p class="text-gray-400 text-sm">Quick updates, shoutouts, and connecting with other devs.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-xl reveal" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 rounded-full bg-gray-700/30 flex items-center justify-center mb-4 text-white">
+                        <i class="fab fa-dev text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Dev.to</h3>
+                    <p class="text-gray-400 text-sm">Write long-form articles about your experience or tutorials.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card p-6 rounded-xl reveal" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-4 text-white">
+                        <i class="fab fa-github text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">GitHub</h3>
+                    <p class="text-gray-400 text-sm">Use Discussions and Issues for bug reports and feature requests.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass-card p-6 rounded-xl reveal" style="transition-delay: 400ms;">
+                    <div class="w-12 h-12 rounded-full bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-500">
+                        <i class="fas fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Linux Forums</h3>
+                    <p class="text-gray-400 text-sm">Discuss packaging, distros, and system integration.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass-card p-6 rounded-xl reveal" style="transition-delay: 500ms;">
+                    <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mb-4 text-purple-500">
+                        <i class="fas fa-globe text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Blogs</h3>
+                    <p class="text-gray-400 text-sm">Personal blogs or community platforms. Own your content.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Who Can Participate -->
+        <div class="max-w-5xl mx-auto mt-32 px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center reveal">Who Can Participate?</h2>
+            
+            <div class="space-y-4">
+                <div class="reveal flex flex-col md:flex-row items-center bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-green-500/50 transition-colors">
+                    <div class="w-3 h-3 rounded-full bg-green-500 mr-0 md:mr-6 mb-2 md:mb-0 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                    <div class="flex-1 text-center md:text-left">
+                        <strong class="text-green-400 text-lg block md:inline md:mr-2">Users</strong>
+                        <span class="text-gray-400">Share experiences, feedback, and suggestions on usability.</span>
+                    </div>
+                </div>
+
+                <div class="reveal flex flex-col md:flex-row items-center bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors">
+                    <div class="w-3 h-3 rounded-full bg-blue-500 mr-0 md:mr-6 mb-2 md:mb-0 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                    <div class="flex-1 text-center md:text-left">
+                        <strong class="text-blue-400 text-lg block md:inline md:mr-2">Developers</strong>
+                        <span class="text-gray-400">Discuss ideas, code improvements, and technical contributions.</span>
+                    </div>
+                </div>
+
+                <div class="reveal flex flex-col md:flex-row items-center bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-purple-500/50 transition-colors">
+                    <div class="w-3 h-3 rounded-full bg-purple-500 mr-0 md:mr-6 mb-2 md:mb-0 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+                    <div class="flex-1 text-center md:text-left">
+                        <strong class="text-purple-400 text-lg block md:inline md:mr-2">Contributors</strong>
+                        <span class="text-gray-400">Talk about PRs, packaging logic, and app publishing.</span>
+                    </div>
+                </div>
+
+                <div class="reveal flex flex-col md:flex-row items-center bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-yellow-500/50 transition-colors">
+                    <div class="w-3 h-3 rounded-full bg-yellow-500 mr-0 md:mr-6 mb-2 md:mb-0 shadow-[0_0_10px_rgba(234,179,8,0.5)]"></div>
+                    <div class="flex-1 text-center md:text-left">
+                        <strong class="text-yellow-400 text-lg block md:inline md:mr-2">Learners</strong>
+                        <span class="text-gray-400">Ask questions, share curiosity, and document your learning journey.</span>
+                    </div>
+                </div>
+                
+                 <div class="reveal flex flex-col md:flex-row items-center bg-zinc-900/50 border border-zinc-800 rounded-lg p-6 hover:border-red-500/50 transition-colors">
+                    <div class="w-3 h-3 rounded-full bg-red-500 mr-0 md:mr-6 mb-2 md:mb-0 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+                    <div class="flex-1 text-center md:text-left">
+                        <strong class="text-red-400 text-lg block md:inline md:mr-2">Supporters</strong>
+                        <span class="text-gray-400">Thoughts, encouragement, and observations help keep us going.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topics to Share -->
+        <div class="max-w-4xl mx-auto mt-32 text-center reveal">
+            <h2 class="text-3xl font-bold mb-8">🗣️ What Can You Share?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Your experience using the Setbian Installer</span>
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Ideas for improving the App Portal</span>
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Thoughts about UX, ethics, or community culture</span>
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Suggestions for new features or workflows</span>
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Your app contribution journey & outcomes</span>
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/5 flex items-start">
+                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                    <span class="text-gray-300">Learning outcomes or reflections</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Links -->
+        <div class="max-w-4xl mx-auto mt-32 text-center reveal">
+            <h3 class="text-xl font-semibold mb-8 text-gray-400 uppercase tracking-widest text-xs">Essential Links</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal" target="_blank" class="group relative px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-all overflow-hidden">
+                    <div class="absolute inset-0 w-0 bg-blue-600 transition-all duration-[250ms] ease-out group-hover:w-full opacity-20"></div>
+                    <span class="relative">App Portal <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                </a>
+                <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/contribute/" target="_blank" class="group relative px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-all overflow-hidden">
+                    <div class="absolute inset-0 w-0 bg-green-600 transition-all duration-[250ms] ease-out group-hover:w-full opacity-20"></div>
+                    <span class="relative">Contribute <i class="fas fa-code-branch ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                </a>
+                 <a href="https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app/" target="_blank" class="group relative px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-all overflow-hidden">
+                    <div class="absolute inset-0 w-0 bg-purple-600 transition-all duration-[250ms] ease-out group-hover:w-full opacity-20"></div>
+                    <span class="relative">Publish Your App <i class="fas fa-upload ml-2 group-hover:translate-x-1 transition-transform"></i></span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black/90 py-16 px-6 mt-20 relative overflow-hidden">
+        <!-- Glow effect in footer -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-900/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <i class="fas fa-heart text-red-500 text-4xl mb-6 animate-pulse-slow"></i>
+            <h2 class="text-3xl font-bold mb-4">A Personal Thank You</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">
+                Thank you for taking the time to discuss, share, or talk about Setbian — whether as a user, developer, contributor, or curious learner. Every discussion, post, and conversation helps the project grow and stay connected to real people, real ideas, and real experiences. Your voice truly matters here — and I am grateful for it. 🙏
+            </p>
+            
+            <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-8"></div>
+            
+            <p class="text-xl font-light text-white italic">
+                "Talk anywhere, share openly, and include the hashtag — <span class="font-bold text-blue-400">#Setbian</span>."
+            </p>
+            <p class="text-sm text-gray-500 mt-2">Keeping the ecosystem connected, human, and community-driven.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 1. Hashtag Copy Functionality
+        function copyHashtag() {
+            const hashtag = "#Setbian";
+            
+            // Clipboard API (Modern)
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(hashtag).then(showFeedback);
+            } else {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = hashtag;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showFeedback();
+            }
+        }
+
+        function showFeedback() {
+            const feedback = document.getElementById('copy-feedback');
+            feedback.style.opacity = '1';
+            setTimeout(() => {
+                feedback.style.opacity = '0';
+            }, 2000);
+        }
+
+        // 2. Reveal on Scroll (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Optional: Unobserve after revealing if you want it to happen only once
+                    // revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+
+        // 3. Dynamic Network Background (Canvas)
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        // Configuration
+        const particleCount = 60; // Number of dots
+        const connectionDistance = 150; // Max distance to draw line
+        const mouseDistance = 200; // Radius around mouse to interact
+
+        let mouse = { x: null, y: null };
+
+        // Resize handling
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Mouse tracking
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Particle Class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Velocity X
+                this.vy = (Math.random() - 0.5) * 0.5; // Velocity Y
+                this.size = Math.random() * 2 + 1;
+                this.color = `rgba(59, 130, 246, ${Math.random() * 0.5})`; // Blueish opacity
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse Interaction (gentle attraction)
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouseDistance - distance) / mouseDistance;
+                        const directionX = forceDirectionX * force * 0.5;
+                        const directionY = forceDirectionY * force * 0.5;
+                        
+                        this.vx += directionX * 0.05;
+                        this.vy += directionY * 0.05;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        // Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Draw connections
+                for (let j = i; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        let opacity = 1 - (distance / connectionDistance);
+                        ctx.strokeStyle = `rgba(100, 116, 139, ${opacity * 0.2})`; // Gray-ish lines
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    </script>
+</body>
+</html>
