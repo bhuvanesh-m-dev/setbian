@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian — Press & Announcements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        setbian: {
+                            base: '#000000',
+                            surface: '#0a0a0a',
+                            highlight: '#1a1a1a',
+                            accent: '#06b6d4', // Cyan-500
+                            accentHover: '#22d3ee', // Cyan-400
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            background-color: #000000;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Typing Cursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #06b6d4;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Interactive Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold tracking-tighter text-white">
+                        Setbian<span class="text-setbian-accent">.</span>
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover:text-setbian-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#installer" class="hover:text-setbian-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Installer</a>
+                        <a href="#portal" class="hover:text-setbian-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">App Portal</a>
+                        <a href="#contribute" class="hover:text-setbian-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Contribute</a>
+                        <a href="#contact" class="px-4 py-2 border border-setbian-accent text-setbian-accent rounded hover:bg-setbian-accent hover:text-black transition-all text-sm font-medium">Connect</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-neutral-900" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-800">About</a>
+                <a href="#installer" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-800">Installer</a>
+                <a href="#portal" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-800">App Portal</a>
+                <a href="#contribute" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-800">Contribute</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center px-4 overflow-hidden">
+        <div class="text-center z-10 max-w-4xl">
+            <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-setbian-accent uppercase bg-setbian-accent/10 rounded-full border border-setbian-accent/20">
+                Press & Announcements
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                Linux, made <span class="text-setbian-accent" id="typewriter"></span><span class="cursor">&nbsp;</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
+                Approachable. Meaningful. Human-centric.<br>
+                Without weakening the power of Linux itself.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#about" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition-all">
+                    Read The Story
+                </a>
+                <a href="https://bhuvaneshm.in/setbian/installer" target="_blank" class="px-8 py-3 border border-gray-700 text-white font-bold rounded hover:border-setbian-accent hover:text-setbian-accent transition-all">
+                    Get Installer
+                </a>
+            </div>
+        </div>
+        
+        <!-- scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-setbian-surface relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6">About Setbian</h2>
+                    <div class="prose prose-invert text-gray-400">
+                        <p class="mb-4 text-lg">
+                            Setbian began as a Debian setup tool and evolved into something larger: a community-driven ecosystem where discovery, installation, contribution, and learning come together.
+                        </p>
+                        <p class="mb-4">
+                            My focus is not only on software installation — but on developer collaboration, transparency, licensing clarity, and emotional connection with open-source culture.
+                        </p>
+                        <blockquote class="border-l-4 border-setbian-accent pl-4 italic text-gray-300 my-6 bg-setbian-highlight p-4 rounded-r">
+                            "Setbian exists for people who build, explore, share, and grow inside the Linux world."
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="mt-10 lg:mt-0 relative">
+                    <div class="absolute -inset-4 bg-setbian-accent/20 blur-3xl rounded-full opacity-30"></div>
+                    <div class="relative bg-setbian-highlight border border-gray-800 p-8 rounded-xl shadow-2xl">
+                        <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-bullseye text-setbian-accent mr-2"></i> Core Goals</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 flex items-center justify-center rounded-full bg-setbian-accent/10 border border-setbian-accent/30 text-setbian-accent text-xs">1</span>
+                                <span class="ml-4 text-gray-300">Make the Linux experience approachable.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 flex items-center justify-center rounded-full bg-setbian-accent/10 border border-setbian-accent/30 text-setbian-accent text-xs">2</span>
+                                <span class="ml-4 text-gray-300">Preserve the power and flexibility of Debian.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 flex items-center justify-center rounded-full bg-setbian-accent/10 border border-setbian-accent/30 text-setbian-accent text-xs">3</span>
+                                <span class="ml-4 text-gray-300">Foster a transparent, developer-friendly ecosystem.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installer Section -->
+    <section id="installer" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-setbian-accent font-mono text-sm">OVERVIEW</span>
+                <h2 class="text-4xl font-bold text-white mt-2">Setbian Installer</h2>
+                <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+                    A click-based Debian post-installation assistant. No memorizing commands, just clarity.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="bg-setbian-highlight p-6 rounded-lg border border-gray-800 card-hover transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4 text-setbian-accent">
+                        <i class="fas fa-mouse-pointer text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Click-based Flow</h3>
+                    <p class="text-sm text-gray-400">Installation simplified into an intuitive UI flow.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-setbian-highlight p-6 rounded-lg border border-gray-800 card-hover transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4 text-setbian-accent">
+                        <i class="fas fa-user-graduate text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Beginner Friendly</h3>
+                    <p class="text-sm text-gray-400">Reduces friction for new learners and adopters.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-setbian-highlight p-6 rounded-lg border border-gray-800 card-hover transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4 text-setbian-accent">
+                        <i class="fas fa-box-open text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">System Respect</h3>
+                    <p class="text-sm text-gray-400">Handles system packages safely and respectfully.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="bg-setbian-highlight p-6 rounded-lg border border-gray-800 card-hover transition-all duration-300">
+                    <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4 text-setbian-accent">
+                        <i class="fab fa-linux text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Debian Values</h3>
+                    <p class="text-sm text-gray-400">Aligned with the stability and open nature of Debian.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="https://bhuvaneshm.in/setbian/installer" target="_blank" class="inline-flex items-center text-setbian-accent hover:text-white font-semibold transition-colors">
+                    Visit Installer Page <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Portal Section -->
+    <section id="portal" class="py-24 bg-setbian-surface border-y border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-end lg:justify-between mb-12">
+                <div>
+                    <span class="text-setbian-accent font-mono text-sm">ECOSYSTEM</span>
+                    <h2 class="text-4xl font-bold text-white mt-2">App Portal</h2>
+                    <p class="mt-4 text-gray-400 max-w-xl">
+                        Discover honestly. Install clearly. Contribute openly.<br>
+                        Connected directly to the Setbian ecosystem.
+                    </p>
+                </div>
+                <div class="mt-6 lg:mt-0">
+                    <a href="https://bhuvaneshm.in/setbian/app-portal" target="_blank" class="px-6 py-3 bg-setbian-highlight border border-gray-700 rounded hover:border-setbian-accent transition-all text-white text-sm">
+                        Browse Full Portal
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mock Portal Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- App Card Mock 1 -->
+                <div class="group bg-black border border-gray-800 rounded-xl p-6 hover:border-setbian-accent/50 transition-all relative overflow-hidden">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded flex items-center justify-center text-white text-xl">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">VS Code</h4>
+                                <span class="text-xs text-gray-500">Development</span>
+                            </div>
+                        </div>
+                        <span class="bg-gray-900 text-gray-400 text-xs px-2 py-1 rounded">Proprietary</span>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-400">Code editing. Redefined. Built on open source.</p>
+                    <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                        <span class="text-xs text-gray-500">v1.83 • .deb</span>
+                        <a href="#" class="text-setbian-accent text-sm hover:underline">Details</a>
+                    </div>
+                </div>
+
+                <!-- App Card Mock 2 -->
+                <div class="group bg-black border border-gray-800 rounded-xl p-6 hover:border-setbian-accent/50 transition-all relative overflow-hidden">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-orange-500 rounded flex items-center justify-center text-white text-xl">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">VLC Media</h4>
+                                <span class="text-xs text-gray-500">Multimedia</span>
+                            </div>
+                        </div>
+                        <span class="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded">GPL</span>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-400">The ultimate open-source multimedia player.</p>
+                    <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                        <span class="text-xs text-gray-500">Stable • .deb</span>
+                        <a href="#" class="text-setbian-accent text-sm hover:underline">Details</a>
+                    </div>
+                </div>
+
+                <!-- App Card Mock 3 -->
+                <div class="group bg-black border border-gray-800 rounded-xl p-6 hover:border-setbian-accent/50 transition-all relative overflow-hidden">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gray-700 rounded flex items-center justify-center text-white text-xl">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">Setbian Term</h4>
+                                <span class="text-xs text-gray-500">System</span>
+                            </div>
+                        </div>
+                        <span class="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded">MIT</span>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-400">Optimized terminal configuration for Setbian.</p>
+                    <div class="mt-6 flex items-center justify-between border-t border-gray-800 pt-4">
+                        <span class="text-xs text-gray-500">Native • .deb</span>
+                        <a href="#" class="text-setbian-accent text-sm hover:underline">Details</a>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-8 text-center text-gray-500 text-sm italic">
+                *Mock display. Visit portal for live apps.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contribution & Policy -->
+    <section id="contribute" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contribution -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-hand-holding-heart text-setbian-accent mr-3"></i> 
+                        Contribution Workflow
+                    </h3>
+                    <p class="text-gray-400 mb-8">
+                        Developers can submit app code via Pull Requests. I review, package into .deb builds, and showcase them.
+                    </p>
+                    
+                    <div class="relative border-l border-gray-800 ml-3 space-y-8">
+                        <div class="relative pl-8">
+                            <span class="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full bg-gray-700"></span>
+                            <h4 class="text-white font-medium">Fork & Submit</h4>
+                            <p class="text-sm text-gray-500">Submit app code to <span class="font-mono text-setbian-accent">apps_code_files</span>.</p>
+                        </div>
+                        <div class="relative pl-8">
+                            <span class="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full bg-setbian-accent animate-pulse"></span>
+                            <h4 class="text-white font-medium">Review & Build</h4>
+                            <p class="text-sm text-gray-500">I review the code and package it into .deb builds.</p>
+                        </div>
+                        <div class="relative pl-8">
+                            <span class="absolute -left-1.5 top-1.5 h-3 w-3 rounded-full bg-gray-700"></span>
+                            <h4 class="text-white font-medium">Publish</h4>
+                            <p class="text-sm text-gray-500">App goes live on the Portal.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <a href="https://bhuvaneshm.in/setbian/contribute" target="_blank" class="text-sm text-white border-b border-setbian-accent hover:text-setbian-accent pb-1">
+                            Read Contribution Guide
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Licensing -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-scale-balanced text-setbian-accent mr-3"></i> 
+                        Licensing & Transparency
+                    </h3>
+                    <div class="bg-setbian-highlight p-6 rounded-xl border border-gray-800">
+                        <p class="text-gray-400 mb-4">
+                            Setbian does not redistribute proprietary software without disclosure.
+                        </p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check text-green-500 mr-3"></i> Open-source apps include license details.
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check text-green-500 mr-3"></i> Proprietary/Copyrighted apps are clearly disclosed.
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check text-green-500 mr-3"></i> Facilitator, not an owner.
+                            </li>
+                        </ul>
+                        <a href="https://bhuvaneshm.in/setbian/licensing-policy" target="_blank" class="block w-full text-center bg-gray-800 py-2 rounded text-sm text-white hover:bg-gray-700 transition">
+                            View Policy Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing & Footer -->
+    <footer id="contact" class="bg-setbian-surface pt-16 pb-8 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <div class="max-w-3xl mx-auto mb-16">
+                <i class="fas fa-quote-left text-3xl text-gray-800 mb-4 block"></i>
+                <p class="text-xl md:text-2xl font-medium text-white mb-4">
+                    "Setbian is not just about installing applications — it is about making Linux more approachable, collaborative, and emotionally meaningful."
+                </p>
+                <div class="flex justify-center space-x-6 mt-8">
+                    <a href="https://www.linkedin.com/in/bhuvaneshm-developer/" target="_blank" class="text-gray-400 hover:text-setbian-accent text-2xl transition-transform hover:scale-110"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://x.com/bhuvaneshm06" target="_blank" class="text-gray-400 hover:text-setbian-accent text-2xl transition-transform hover:scale-110"><i class="fab fa-twitter"></i></a>
+                    <a href="https://dev.to/bhuvaneshm_dev" target="_blank" class="text-gray-400 hover:text-setbian-accent text-2xl transition-transform hover:scale-110"><i class="fab fa-dev"></i></a>
+                    <a href="https://github.com/bhuvanesh-m-dev" target="_blank" class="text-gray-400 hover:text-setbian-accent text-2xl transition-transform hover:scale-110"><i class="fab fa-github"></i></a>
+                    <a href="https://www.youtube.com/@bhuvaneshm_dev" target="_blank" class="text-gray-400 hover:text-setbian-accent text-2xl transition-transform hover:scale-110"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-600 text-sm">
+                    &copy; 2025 - Present Setbian Project. Built by Bhuvanesh M.
+                </p>
+                <div class="mt-4 md:mt-0 space-x-4 text-sm text-gray-600">
+                    <a href="https://bhuvaneshm.in/setbian/licensing-policy" class="hover:text-white">Privacy</a>
+                    <a href="https://bhuvaneshm.in/setbian/contribute" class="hover:text-white">Contribute</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- Typing Effect ---
+        const words = ["approachable.", "meaningful.", "human-centric."];
+        let i = 0;
+        let timer;
+
+        function typeWriter() {
+            const speed = 100;
+            const wait = 2000;
+            const element = document.getElementById('typewriter');
+            
+            if (!element) return;
+
+            let wordIndex = 0;
+            let isDeleting = false;
+            let txt = '';
+
+            function type() {
+                const current = wordIndex % words.length;
+                const fullTxt = words[current];
+
+                if (isDeleting) {
+                    txt = fullTxt.substring(0, txt.length - 1);
+                } else {
+                    txt = fullTxt.substring(0, txt.length + 1);
+                }
+
+                element.innerHTML = txt;
+
+                let typeSpeed = speed;
+
+                if (isDeleting) {
+                    typeSpeed /= 2;
+                }
+
+                if (!isDeleting && txt === fullTxt) {
+                    typeSpeed = wait;
+                    isDeleting = true;
+                } else if (isDeleting && txt === '') {
+                    isDeleting = false;
+                    wordIndex++;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+            type();
+        }
+
+        // --- Canvas Background Animation (Constellation) ---
+        function initCanvas() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.5)'; // Cyan
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                // Number of particles based on screen width
+                const count = Math.floor(window.innerWidth / 15);
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Draw Connections
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 150) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 - distance/1500})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                initParticles();
+            });
+
+            resize();
+            initParticles();
+            animate();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter();
+            initCanvas();
+        });
+    </script>
+</body>
+</html>
