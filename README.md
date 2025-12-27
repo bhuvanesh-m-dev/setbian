@@ -18,7 +18,7 @@ Setbian is a lightweight, GUI-based post-installation setup tool that helps Debi
 ## 🔗 Quick Links
 
 - **Official Website**: [https://bhuvanesh-m-dev.github.io/setbian](https://bhuvanesh-m-dev.github.io/setbian)  
-- **App Portal**: [https://bhuvanesh-m-dev.github.io/setbian/app-portal/](https://bhuvanesh-m-dev.github.io/setbian/app-portal)
+- **App Portal**: [https://bhuvanesh-m-dev.github.io/setbian/app-portal](https://bhuvanesh-m-dev.github.io/setbian/app-portal)
 
 - --- 
 
