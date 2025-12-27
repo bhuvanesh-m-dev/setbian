@@ -1,54 +1,133 @@
-### 🧰 Setbian – Smart Debian Setup Assistant
+# 🧰 Setbian — Debian Post-Installation Automation Tool
 
-> Official APT package for Setbian — GUI-based batch installer for essential Debian apps.  
-[![License](https://img.shields.io/badge/license-MIT-blue.svg )](https://github.com/bhuvanesh-m-dev/setbian/blob/main/document/LICENSE )
-![Built with Python](https://img.shields.io/badge/Built%20with-Python-blue)
-![Platform](https://img.shields.io/badge/Platform-Debian%20Linux-red)
-![GUI](https://img.shields.io/badge/GUI-Tkinter-yellow)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Debian%20Linux-red)](https://www.debian.org/)
+[![Built With](https://img.shields.io/badge/Built%20With-Python%20%2B%20Tkinter-blue)](https://docs.python.org/3/library/tkinter.html)
+[![Status](https://img.shields.io/badge/Project-Active-brightgreen)](https://bhuvanesh-m-dev.github.io/setbian/)
+[![Package](https://img.shields.io/badge/Format-.deb-orange)](https://wiki.debian.org/DebianPackage)
+[![Community](https://img.shields.io/badge/Ecosystem-Setbian%20App%20Portal-purple)](https://bhuvanesh-m-dev.github.io/setbian/app-portal/)
 ![Latest Release](https://img.shields.io/github/v/release/bhuvanesh-m-dev/setbian)
-![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![DevOps Friendly](https://img.shields.io/badge/DevOps-Automated%20Builds-orange)
-[![Download .deb](https://img.shields.io/badge/Download-.deb-blue)](https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.3/setbian-0.0.3.deb)   
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&width=480&lines=Welcome+to+Setbian+by+Bhuvanesh+M++;GUI+tool+for+Debian+System+Configuration)](https://git.io/typing-svg)
-![Setbian Banner](https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif)
+[![Download .deb](https://img.shields.io/badge/Download-.deb-blue)](https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb)  
 
-## 📦 Install via APT
-
-```bash
-wget -O setbian.deb https://github.com/bhuvanesh-m-dev/setbian/releases/download/v0.0.5/setbian-0.0.5.deb && \
-sudo dpkg -i setbian.deb || (sudo apt --fix-broken install -y && sudo dpkg -i setbian.deb) && \
-setbian
-
-```
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&pause=800&width=520&lines=Smart+Debian+Setup+Assistant;Post-Installation+Automation+Tool;GUI+Batch+Installer+for+Essential+Apps;Built+by+Bhuvanesh+M)](https://git.io/typing-svg)
 
 ---
 
-# 🧰 Setbian - Debian Setup Made Simple
+Setbian is a lightweight, GUI-based post-installation setup tool that helps Debian users transform a fresh installation into a fully functional workstation with minimal effort. Built using Python + Tkinter, Setbian provides a simple checkbox-based interface to batch-install essential applications, developer tools, and utilities — without requiring complex terminal commands or manual repository configuration.
 
-> *"Because even your system deserves a proper welcome."*
+## 🔗 Quick Links
 
-**Setbian** is a lightweight, user-friendly GUI-based setup assistant for freshly installed **Debian** systems. Built with native Python and preinstalled libraries, Setbian helps you choose and install essential software — right after system setup, even **before you open the browser**.  
-Setbian was born to simplify the complexity of configuring Debian-based systems. While Debian offers robustness and flexibility, many users—especially beginners—find its command-line configuration intimidating. Setbian addresses this by providing a clean and user-friendly graphical interface that automates common setup tasks, making Debian more accessible and efficient for everyone.
+- **Official Website**: [https://bhuvanesh-m-dev.github.io/setbian](https://bhuvanesh-m-dev.github.io/setbian)  
+- **App Portal**: [https://bhuvanesh-m-dev.github.io/setbian/app-portal/](https://bhuvanesh-m-dev.github.io/setbian/app-portal)
 
-[📄 Download Setbian User Guide (PDF)](https://raw.githubusercontent.com/bhuvanesh-m-dev/setbian/main/setbian-user-guide-debian-config-tool.pdf)
+- --- 
 
----
 
-## 🚀 Key Features
 
-* ✅ Native Python GUI (no need to install extra libraries)
-* ✅ App selection with tick-box interface
-* ✅ Batch installation of essential Debian packages
-* ✅ Runs on clean Debian install with just internet access
-* ✅ Fully open-source and community-driven
+## 🌍 About Setbian
 
----
+Setbian bridges the gap between Debian’s stability-first philosophy and real-world usability needs — especially for users migrating from Windows or Ubuntu who still want the purity, control, and openness of Debian.
 
-## 💻 Screenshot Preview
+- **Learn more**: [About Page](https://bhuvanesh-m-dev.github.io/setbian/app-portal/about/)
 
-<img src="https://raw.githubusercontent.com/bhuvanesh-m-dev/setbian/refs/heads/main/images/screenshot/screenshot2.png" alt="Setbian Project Preview" width="1000">
+- ---   
 
----
+## 🚀 Publish Your App to the Portal
+
+Developers can submit their Linux applications to the Setbian ecosystem.
+
+- **Publishing Guide**: [How to Publish](https://bhuvanesh-m-dev.github.io/setbian/app-portal/publish-your-app/)  
+- **Contribution Values**: [Contribute](https://bhuvanesh-m-dev.github.io/setbian/app-portal/contribute/)  
+- **Community**: [Discussions](https://bhuvanesh-m-dev.github.io/setbian/app-portal/discussions/)
+
+- ---  
+
+## 🧩 Purpose & Vision
+
+Debian prioritizes freedom, security, and minimalism — but a fresh installation often lacks codecs, drivers, and essential tools needed for everyday use.
+
+Setbian exists to:
+- ✨ Reduce post-installation friction  
+- 🧑‍🤝‍🧑 Provide a human-centered onboarding experience  
+- 🛡️ Preserve Debian’s stability and openness  
+- ⚡ Enable fast, repeatable workstation provisioning  
+
+- **Read more**: [Vision & Roadmap](https://bhuvanesh-m-dev.github.io/setbian/app-portal/vision-and-roadmap/)
+
+- ---  
+
+## ⚙️ Technical Architecture
+
+- **Language & Framework**: Python + Tkinter (lightweight, dependency-minimal)  
+- **Execution Model**: GUI orchestrating `apt` / `dpkg` via `subprocess`  
+- **Package Format**: Native `.deb` package  
+- **Privilege Handling**: Runs as normal user; escalates only when required  
+- **Repository Automation**: Configures trusted third-party repos when needed  
+- **Design**: Checkbox-based batch installer with live progress feedback  
+
+- **Full Docs**: [Technical Documentation](https://bhuvanesh-m-dev.github.io/setbian/app-portal/documentation/)
+
+- ---   
+
+
+## 📦 Essentials Catalog (Curated Starter Toolkit)
+
+Setbian focuses on practical, high-value essentials such as:
+- **Browsers**: Chromium  
+- **Media**: VLC Media Player  
+- **Developer Tools**: VS Code, Git, Curl  
+- **System Utilities**: GParted, Neofetch  
+- **Communication**: Telegram  
+
+- **Explore**: [App Catalog](https://bhuvanesh-m-dev.github.io/setbian/app-portal/)
+
+- ---  
+
+
+
+## 🔐 Security & System Integration
+
+- 🔒 Least-privilege execution  
+- 🧩 Leverages native Debian tools (`apt`, `dpkg`)  
+- 🪶 Transparent install feedback  
+- 💻 Works reliably on minimal environments  
+
+- **Security Updates**: [Releases & Updates](https://bhuvanesh-m-dev.github.io/setbian/app-portal/updates-and-releases/)
+
+- ---  
+
+
+
+## 🌐 Setbian App Portal — Community Ecosystem
+
+The Setbian App Portal is a community-driven platform where:
+- 🧑‍💻 Developers publish apps via Pull Requests  
+- 📦 Apps are `.deb`-packaged with clear licensing (MIT/GPL/Apache)  
+- 🤝 Collaboration and open contribution are core values  
+
+- **Visit**: [App Portal](https://bhuvanesh-m-dev.github.io/setbian/app-portal/)
+
+- ---  
+
+
+
+## 📰 Updates, Releases & Announcements
+
+- **Project Updates**: [Updates & Releases](https://bhuvanesh-m-dev.github.io/setbian/app-portal/updates-and-releases/)  
+- **Press & News**: [Announcements](https://bhuvanesh-m-dev.github.io/setbian/app-portal/press-and-announcements/)
+
+- ---  
+
+
+
+## 🧠 Philosophy
+
+> “Setbian is not just about installing applications — it is about making Linux more approachable, collaborative, and meaningful.”
+
+The project values clarity, transparency, respect for developers, and community-centric growth.
+
+---  
+
 
 ## 🎥 Setbian Demo Video - See It in Action!  
 🚀 Experience the power of Setbian in under 2 minutes!Simplify your Debian system configuration with just a few clicks — no terminal hassle.Watch the full walkthrough and installation guide below:  
@@ -60,74 +139,10 @@ Setbian was born to simplify the complexity of configuring Debian-based systems.
 
 ---
 
-## ⚙️ How It Works
 
-1. Boot into a fresh Debian install
-2. Open terminal and run Setbian (coming `.deb` support)
-3. Select the apps you want using the GUI
-4. Hit "Install" — Setbian does the rest
+## 👤 Author
 
----
+**Bhuvanesh M**  
+Developer • Linux Ecosystem Builder • Open-Source Contributor  
 
-## 📦 Example App List (Initial Version)
-
-* Chromium
-* VLC Media Player
-* GParted
-* Neofetch
-* Curl
-* Git
-* VS Code
-* And many more...
-
-*You can customize the app list easily in the tick box !*
-
----
-
-## 🧑‍💻 For Developers
-
-Want to contribute? You're welcome!
-
-```bash
-git clone https://github.com/bhuvanesh-m-dev/Setbian.git
-cd Setbian
-python3 main.py
-```
-
----
-
-## 🔖 Version: `v0.0.5` 
-
-### ✅ Now Includes One-Click Install for:
-
-* Git
-* Curl
-* VLC Media Player
-* GIMP
-* VS Code
-* Firefox
-* Google Chromium
-* MPV
-* Telegram Desktop
-* New in v0.0.5 : .deb file picker + system-level handler
-
----
-
-## 🎯 Key Features
-
-* Simple GUI (Tkinter-based, no extra dependencies)
-* Supports both APT and `.deb` package installations
-* Password prompt with auto-close popup
-* Live progress window with status logs
-* Works on fresh Debian installs (only needs internet access)
-
----
-
-## 🔧 Dev Info
-
-**Maintainer:** Bhuvanesh M  
-**Email:** [bhuvaneshm.developer@gmail.com](mailto:bhuvaneshm.developer@gmail.com)  
-**Homepage:** [github.com/bhuvanesh-m-dev/Setbian](https://github.com/bhuvanesh-m-dev/Setbian)  
-**Webpage:** [bhuvaneshm.in/setbian](https://bhuvaneshm.in/setbian)
-
-License: MIT | Release: Stable
+- **Ecosystem & Portal Info**: [About the Ecosystem](https://bhuvanesh-m-dev.github.io/setbian/app-portal/about/#ecosystem)
