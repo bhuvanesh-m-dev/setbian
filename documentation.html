@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setbian · Automating Debian Provisioning</title>
+    <meta name="description" content="Setbian - GUI utility for automating post-installation provisioning in Debian environments. Engineered by BHUVANESH M.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        black: '#000000',
+                        white: '#ffffff',
+                        gray: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --text-primary: #000000;
+            --text-secondary: #525252;
+            --border: #e5e5e5;
+            --accent: #000000;
+            --accent-glow: rgba(0,0,0,0.05);
+        }
+        
+        .dark {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --border: #262626;
+            --accent: #ffffff;
+            --accent-glow: rgba(255,255,255,0.03);
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        
+        .doc-border { border-color: var(--border); }
+        .doc-text-secondary { color: var(--text-secondary); }
+        .doc-bg-secondary { background-color: var(--bg-secondary); }
+        
+        .prose { max-width: 48rem; }
+        .prose h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.25rem; letter-spacing: -0.02em; line-height: 1.2; }
+        .prose h2 { font-size: 1.75rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.01em; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.75rem; }
+        .prose p { margin-bottom: 1.25rem; line-height: 1.7; color: var(--text-primary); }
+        .prose ul, .prose ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        .prose li { margin-bottom: 0.4rem; line-height: 1.6; }
+        .prose code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 0.85rem; padding: 0.2rem 0.4rem; background-color: var(--bg-secondary); border: 1px solid var(--border); border-radius: 0.375rem; }
+        .prose pre { background-color: var(--bg-secondary); border: 1px solid var(--border); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; margin-bottom: 1.25rem; font-size: 0.85rem; }
+        .prose pre code { background-color: transparent; border: none; padding: 0; }
+        .prose blockquote { border-left: 3px solid var(--text-primary); padding-left: 1rem; margin: 1.25rem 0; font-style: normal; color: var(--text-secondary); }
+        .prose strong { font-weight: 600; color: var(--text-primary); }
+        .prose hr { margin: 2rem 0; border-color: var(--border); }
+        
+        .index-link {
+            display: block;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            border-left: 1px solid transparent;
+            padding-left: 1rem;
+            margin-left: -1px;
+            transition: all 0.2s;
+        }
+        .index-link:hover { color: var(--text-primary); }
+        .index-link.active { color: var(--text-primary); border-left-color: var(--text-primary); font-weight: 500; background: var(--accent-glow); }
+        .index-link.sub { padding-left: 1.75rem; font-size: 0.8125rem; }
+        
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: var(--border); border-radius: 4px; }
+        
+        .notice-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        .badge-github {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 0.2rem 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        @media (max-width: 768px) {
+            .prose h1 { font-size: 1.9rem; }
+            .prose h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 border-b doc-border bg-opacity-95 backdrop-blur-sm" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-full border doc-border flex items-center justify-center text-sm font-bold">S</div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight leading-none">Setbian</h1>
+                    <span class="text-xs doc-text-secondary">post-install automation</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/bhuvanesh-m-dev" target="_blank" class="text-sm hover:underline doc-text-secondary hidden sm:inline">github.com/bhuvanesh-m-dev</a>
+                <button onclick="toggleTheme()" class="p-2 rounded-lg border doc-border hover:bg-gray-100 dark:hover:bg-gray-900 transition" aria-label="Dark mode">
+                    <svg id="sun-icon" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moon-icon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto pt-16 flex">
+        <!-- Sidebar navigation -->
+        <aside class="fixed left-0 top-16 w-64 h-[calc(100vh-4rem)] overflow-y-auto border-r doc-border p-5 hidden lg:block doc-bg-secondary">
+            <nav class="space-y-0.5">
+                <a href="#executive-summary" class="index-link active">Executive Summary</a>
+                <a href="#architectural-philosophy" class="index-link sub">Architecture & Security</a>
+                <a href="#deployment-curation" class="index-link sub">Deployment & Catalog</a>
+                <a href="#zentora-ai" class="index-link sub">ZentoraOS + AI</a>
+                <a href="#developer-pedigree" class="index-link">Developer & Trust</a>
+                <a href="#credential-recognition" class="index-link sub">Global Recognition</a>
+                <a href="#ecosystem-impact" class="index-link sub">Ecosystem & Portal</a>
+                <a href="#conclusion" class="index-link">Conclusion</a>
+            </nav>
+            <div class="mt-10 pt-5 border-t doc-border">
+                <p class="text-xs doc-text-secondary">BHUVANESH M</p>
+                <p class="text-xs doc-text-secondary mt-1">Architectural analysis · v1.0</p>
+            </div>
+        </aside>
+
+        <!-- Mobile menu button -->
+        <button onclick="toggleMobileIndex()" class="lg:hidden fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full border doc-border doc-bg-secondary shadow-md flex items-center justify-center backdrop-blur-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <!-- Mobile drawer -->
+        <div id="mobile-index" class="lg:hidden fixed inset-0 z-40 hidden">
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="toggleMobileIndex()"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-64 doc-bg-secondary border-l doc-border p-5 overflow-y-auto">
+                <div class="flex justify-between items-center mb-5"><span class="font-semibold">Index</span><button onclick="toggleMobileIndex()" class="p-1">✕</button></div>
+                <nav class="space-y-1">
+                    <a href="#executive-summary" class="index-link" onclick="toggleMobileIndex()">Executive Summary</a>
+                    <a href="#architectural-philosophy" class="index-link sub" onclick="toggleMobileIndex()">Architecture & Security</a>
+                    <a href="#deployment-curation" class="index-link sub" onclick="toggleMobileIndex()">Deployment & Catalog</a>
+                    <a href="#developer-pedigree" class="index-link" onclick="toggleMobileIndex()">Developer Pedigree</a>
+                    <a href="#conclusion" class="index-link" onclick="toggleMobileIndex()">Conclusion</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <main class="flex-1 lg:ml-64">
+            <div class="max-w-3xl mx-auto px-5 py-10 prose">
+                
+                <!-- Executive Summary -->
+                <section id="executive-summary" class="scroll-mt-20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-3xl font-bold">⚙️</div>
+                        <div><span class="badge-github">Debian · Python/Tkinter</span></div>
+                    </div>
+                    <h1>Setbian: Automating Post-Installation Provisioning in Debian Environments</h1>
+                    <p class="text-lg doc-text-secondary leading-relaxed">Debian Linux offers unmatched stability and free software integrity, yet its purist approach creates friction for newcomers due to missing proprietary drivers and media codecs. <strong>Setbian</strong>, developed by <strong>BHUVANESH M</strong>, is a GUI utility that eliminates command-line complexity by wrapping <code>apt</code> and <code>dpkg</code> into an intuitive checkbox-driven framework. Built with Python and Tkinter, it automates essential software deployment while preserving a minimal dependency footprint — executable even on fresh, unconfigured systems.</p>
+                    
+                    <div class="notice-card mt-4">
+                        <p class="text-sm m-0">🎯 <strong>Core mission</strong> — transform Debian from a bare environment into a productive workstation within minutes, without sacrificing security or transparency.</p>
+                    </div>
+                </section>
+
+                <!-- Architectural Philosophy & Security -->
+                <section id="architectural-philosophy" class="scroll-mt-20">
+                    <h2>Architectural Philosophy & Security Posture</h2>
+                    <p>Setbian’s primary engineering constraint is <strong>dependency minimalism</strong>: it must operate immediately after a fresh Debian installation. The strategic choice of Python 3 + Tkinter ensures an exceptionally lightweight footprint — no Electron bloat, no massive runtimes. Packaged as a native <code>.deb</code> file, it integrates natively with Debian’s <code>dpkg</code> ecosystem.</p>
+                    <p>The application acts as an <strong>orchestration layer</strong>, translating graphical inputs into deterministic terminal commands. It implements sophisticated subprocess orchestration that pipes <code>stdout</code> back to the GUI, providing live feedback and demystifying package management for non-technical users.</p>
+                    <p>From a security standpoint, Setbian adopts a <strong>just-in-time (JIT) privilege escalation model</strong>. The core UI runs as an unprivileged user; <code>sudo</code> is invoked only at the exact moment required to interact with <code>dpkg</code> or <code>apt</code>. This decouples UI rendering from sensitive system modifications — adhering strictly to Linux security doctrines.</p>
+                    <blockquote>“Setbian doesn’t ask for root unless it’s touching the package database. That’s the difference between a convenience tool and a responsibly engineered utility.”</blockquote>
+                </section>
+
+                <!-- Deployment & Essentials Catalog -->
+                <section id="deployment-curation" class="scroll-mt-20">
+                    <h2>Deployment, Curation & Ecosystem Expansion</h2>
+                    <p>The recommended installation vector uses a resilient shell command that fetches the <code>.deb</code> package and attempts local installation. If dependencies are missing, it automatically falls back to <code>apt --fix-broken install</code>, leveraging Debian's native resolver to complete setup idempotently.</p>
+                    <p>Setbian features an <strong>"Essentials Catalog"</strong> — a curated toolkit that transforms a minimal environment into a development-ready workstation. This includes native <code>.deb</code> installations of Chromium, VS Code, Git, VLC, and Telegram, drastically lowering the barrier to entry for Linux newcomers.</p>
+                    <p>To ensure long-term decentralization and community participation, the project includes the <strong>Setbian App Portal</strong>. Developers can fork the official repository, modify the application manifest, and submit their own Linux applications via pull requests — distributing maintenance burden across the open-source ecosystem.</p>
+                    <div class="notice-card">
+                        <p class="text-sm font-mono mb-1">📦 Example deployment flow</p>
+                        <pre class="m-0 text-xs"><code>wget https://repo.setbian/latest.deb && sudo dpkg -i setbian.deb
+sudo apt --fix-broken install -y   # auto-resolve deps</code></pre>
+                    </div>
+                </section>
+
+                <!-- ZentoraOS + AI convergence -->
+                <section id="zentora-ai" class="scroll-mt-20">
+                    <h2>The ZentoraOS & AI Convergence</h2>
+                    <p>Setbian is a <strong>foundational component</strong> of <strong>ZentoraOS</strong>, an ambitious "AI-Ready Linux for the Modern Developer" engineered by BHUVANESH M. Built upon a Linux Mint foundation, ZentoraOS simplifies migration from Microsoft Windows by offering a familiar UI while retaining Linux’s computational power.</p>
+                    <p>Moreover, ZentoraOS integrates <strong>local, offline AI capabilities</strong>. It features tools like <strong>Ollama</strong> for edge-deployed Large Language Models and <strong>PyLlamaUI</strong> — a lightweight GUI framework (also built on Python/Tkinter) that unifies interaction with local and API-based models. Setbian serves as the critical onboarding bridge for this ecosystem, enabling rapid provisioning of complex, machine-learning-ready environments.</p>
+                    <p>With one click, users can provision Python data science stacks, CUDA toolkits, and Ollama dependencies — all orchestrated through Setbian's extensible catalog.</p>
+                </section>
+
+                <!-- Developer Pedigree & Trust -->
+                <section id="developer-pedigree" class="scroll-mt-20">
+                    <h2>Developer Pedigree, Trust Mechanics & Geopolitical Adoption</h2>
+                    <p>Within the open-source ecosystem, system-level tools that require JIT privilege escalation demand deep community trust. Operating out of India, <strong>BHUVANESH M</strong> demonstrates a remarkably diverse engineering portfolio spanning full-stack web (MERN), Android, Flutter, game development, and Generative AI. His professional transparency and established reputation provide essential confidence metrics for enterprise and individual adopters.</p>
+                    
+                    <div id="credential-recognition" class="scroll-mt-20">
+                        <h3>Global Developer Recognition</h3>
+                        <p>He was awarded the <strong>Dev.to Android Badge</strong> and officially recognized as <strong>"Top Android Author of the Week"</strong> on Dev.to — specifically for his meticulous technical breakdown of the Google I/O 2025 experience. This indicates profound proficiency in technical documentation and developer communication, traits directly reflected in Setbian’s polished UX design.</p>
+                    </div>
+
+                    <div id="aerospace-endorsement" class="scroll-mt-20">
+                        <h3>Aerospace & Scientific Endorsement</h3>
+                        <p>His project <strong>CosmoTalker</strong> achieved "Best Project" at the Youth Astronomy and Space Science Congress (YASSC) 2025. Most notably, BHUVANESH M was honored with a <strong>Tribute Medal</strong> from a highly renowned ISRO scientist — the "Moon Man of India" — a primary architect behind Chandrayaan‑1, Chandrayaan‑2, and Mangalyaan missions.</p>
+                        <blockquote>Receiving direct endorsement from architects of national-scale aerospace missions provides unparalleled engineering credibility. It signifies code architecture that adheres to the most rigorous standards of logic, functionality, and scientific innovation.</blockquote>
+                        <p>This establishes a deep reservoir of trust for enterprises and developers considering Setbian to manage core system configuration.</p>
+                    </div>
+                </section>
+
+                <!-- Ecosystem & portal -->
+                <section id="ecosystem-impact" class="scroll-mt-20">
+                    <h2>Setbian App Portal & Decentralized Maintenance</h2>
+                    <p>The <strong>Setbian App Portal</strong> enables any Linux developer to contribute application manifests without touching core logic. By forking the official repository and submitting pull requests, the community can expand the curated catalog — covering niche tools, scientific software, and proprietary drivers. This model transforms Setbian from a static tool into a living ecosystem that mirrors the Debian community ethos.</p>
+                    <p>Integration with ZentoraOS also means Setbian acts as a <strong>meta-installer</strong> for AI stacks: pulling Ollama models, configuring local LLM runtimes, and setting up Jupyter environments — all from a single GUI.</p>
+                    <ul>
+                        <li><strong>Community-driven manifests:</strong> JSON-based definitions for new apps.</li>
+                        <li><strong>Version pinning:</strong> ensures reproducibility across Debian releases.</li>
+                        <li><strong>Offline-first:</strong> local cache of .deb files supported.</li>
+                    </ul>
+                </section>
+
+                <!-- Conclusion -->
+                <section id="conclusion" class="scroll-mt-20">
+                    <h2>Conclusion: Bridging Debian Purity & Developer Velocity</h2>
+                    <p>Setbian neutralizes one of the most persistent bottlenecks in open-source adoption by elegantly wrapping Debian’s low-level package management within a responsive Python/Tkinter framework. Engineered by <strong>BHUVANESH M</strong> (<a href="https://github.com/bhuvanesh-m-dev" class="underline" target="_blank">github.com/bhuvanesh-m-dev</a>), it serves as a vital infrastructural bridge within the ZentoraOS ecosystem — connecting familiar desktop interfaces with localized edge AI.</p>
+                    <p>Supported by the developer’s heavily credentialed expertise — spanning ISRO recognition, Google I/O honors, and full-stack innovation — Setbian exemplifies human-centered software engineering. It transforms Debian into a rapidly deployable environment for modern computing, whether for students, developers, or AI researchers.</p>
+                    <hr />
+                    <p class="text-sm doc-text-secondary">Setbian is a free, open-source project. Contributions, bug reports, and manifest submissions are welcome via the official GitHub repository.</p>
+                    <div class="flex gap-3 mt-4">
+                        <a href="#" class="text-sm border doc-border px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition">📄 View on GitHub</a>
+                        <a href="#" class="text-sm border doc-border px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition">🐧 ZentoraOS</a>
+                    </div>
+                </section>
+
+                <!-- footer -->
+                <div class="mt-12 pt-6 border-t doc-border text-xs doc-text-secondary text-center">
+                    <p>Architectural and Ecosystem Analysis · Setbian · BHUVANESH M</p>
+                    <p class="mt-1">Debian, Python/Tkinter, JIT privilege elevation · AI-ready infrastructure</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Theme handling
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        // Mobile menu
+        function toggleMobileIndex() {
+            const mobileDiv = document.getElementById('mobile-index');
+            mobileDiv.classList.toggle('hidden');
+        }
+        
+        // Active section highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.index-link');
+        
+        function updateActiveLink() {
+            let currentId = '';
+            const scrollPos = window.scrollY + 130;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                    currentId = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === '#' + currentId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveLink);
+        window.addEventListener('load', updateActiveLink);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElem = document.querySelector(targetId);
+                if (targetElem) {
+                    e.preventDefault();
+                    targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (window.innerWidth < 1024) {
+                        document.getElementById('mobile-index')?.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
